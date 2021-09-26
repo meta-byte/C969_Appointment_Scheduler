@@ -28,6 +28,11 @@ namespace AndrewHowardSchedulerApp.DataClasses
         public DateTime LastUpdated { get; set; }
         public string LastUpdatedBy { get; set; }
 
+        public User()
+        {
+
+        }
+
         public User(int userID, string username, string password, bool active, DateTime createDate, string createdBy, DateTime lastUpdate, string lastUpdateBy)
         {
             UserID = userID;

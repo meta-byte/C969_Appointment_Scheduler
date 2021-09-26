@@ -47,13 +47,11 @@ namespace AndrewHowardSchedulerApp
         private void apptWeekViewRadio_CheckedChanged(object sender, EventArgs e)
         {
             apptTitle.Text = "Appointments This Week";
-
         }
 
         private void apptDayViewRadio_CheckedChanged(object sender, EventArgs e)
         {
             apptTitle.Text = "Appointments Today";
-
         }
     }
 }

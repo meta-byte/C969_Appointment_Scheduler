@@ -56,10 +56,23 @@ namespace AndrewHowardSchedulerApp
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
             Appointments Appointments = new Appointments();
-            Appointments.ShowDialog();
-            this.Close();
+            string username = loginUserField.Text;
+            string password = loginPasswordField.Text;
+            var user = DB.Database.Login(username, password);
+
+            if (user != null)
+            {
+
+                this.Hide();
+                Appointments.ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Invalid Username or Password","Login Error",MessageBoxButtons.OK);
+            }
+
         }
     }
 }
