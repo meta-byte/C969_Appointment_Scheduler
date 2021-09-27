@@ -12,7 +12,7 @@ namespace AndrewHowardSchedulerApp
 {
     public partial class Appointments : Form
     {
-        public Appointments()
+        public Appointments(DataClasses.User user)
         {
             InitializeComponent();
             apptDayViewRadio.Checked = true;

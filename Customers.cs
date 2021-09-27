@@ -19,8 +19,10 @@ namespace AndrewHowardSchedulerApp
 
         private void appointmentsButton_Click(object sender, EventArgs e)
         {
+            var user = new DataClasses.User();
+
             this.Hide();
-            Appointments Appointments = new Appointments();
+            Appointments Appointments = new Appointments(user);
             Appointments.ShowDialog();
             this.Close();
         }

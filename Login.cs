@@ -13,6 +13,10 @@ namespace AndrewHowardSchedulerApp
 {
     public partial class login : Form
     {
+
+        string loginErrorMessage;
+        string loginErrorTitle;
+
         public login()
         {
             InitializeComponent();
@@ -42,6 +46,8 @@ namespace AndrewHowardSchedulerApp
             loginUserLabel.Text = "Username";
             loginPasswordLabel.Text = "Password";
             loginButton.Text = "Login";
+            loginErrorMessage = "Invalid Username or Password";
+            loginErrorTitle = "Login Error";
         }
 
         private void japaneseLogin()
@@ -52,11 +58,12 @@ namespace AndrewHowardSchedulerApp
             loginUserLabel.Text = "ユーザー名";
             loginPasswordLabel.Text = "パスワード";
             loginButton.Text = "ログインする";
+            loginErrorMessage = "無効なユーザー名またはパスワード";
+            loginErrorTitle = "ログインエラー";
         }
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            Appointments Appointments = new Appointments();
             string username = loginUserField.Text;
             string password = loginPasswordField.Text;
             var user = DB.Database.Login(username, password);
@@ -65,12 +72,13 @@ namespace AndrewHowardSchedulerApp
             {
 
                 this.Hide();
+                Appointments Appointments = new Appointments(user);
                 Appointments.ShowDialog();
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Invalid Username or Password","Login Error",MessageBoxButtons.OK);
+                MessageBox.Show(loginErrorMessage,loginErrorTitle, MessageBoxButtons.OK);
             }
 
         }
