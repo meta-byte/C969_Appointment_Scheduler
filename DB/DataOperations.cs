@@ -6,10 +6,11 @@ using System.Data;
 using System.IO;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using AndrewHowardSchedulerApp.DataClasses;
 
 namespace AndrewHowardSchedulerApp.DB
 {
-    public static class Database
+    public static class DataOperations
     {
         //private
         private const string server = "localhost";
@@ -40,10 +41,9 @@ namespace AndrewHowardSchedulerApp.DB
             return;
         }
 
-        public static DataClasses.User Login(string username, string password)
+        public static void Login(string username, string password)
         {
-            DataClasses.User user = new DataClasses.User();
-
+            
             try
             {
 
@@ -67,17 +67,19 @@ namespace AndrewHowardSchedulerApp.DB
 
                         if (foundUsername != username || foundPassword != password)
                         {
-                            user = null;
+                            User.UserID = 0;
+
+                            return;
                         }
                         else
                         {
-                            user.UserID = int.Parse(foundID);
-                            user.Username = foundUsername;
-                            user.Password = foundPassword;
-                            user.CreateDate = (DateTime)foundCreateDate;
-                            user.CreatedBy = foundCreatedBy;
-                            user.LastUpdated = (DateTime)foundLastUpdate;
-                            user.LastUpdatedBy = foundLastUpdateBy;
+                            User.UserID = int.Parse(foundID);
+                            User.Username = foundUsername;
+                            User.Password = foundPassword;
+                            User.CreateDate = (DateTime)foundCreateDate;
+                            User.CreatedBy = foundCreatedBy;
+                            User.LastUpdated = (DateTime)foundLastUpdate;
+                            User.LastUpdatedBy = foundLastUpdateBy;
 
 
                         }
@@ -92,7 +94,7 @@ namespace AndrewHowardSchedulerApp.DB
             }
 
             Disconnect();
-            return user;
+            return;
 
         }
 
@@ -134,5 +136,48 @@ namespace AndrewHowardSchedulerApp.DB
             return appoinmentsTable;
         }
 
+        public static DataTable GetCustomers()
+        {
+            DataTable customersTable = new DataTable();
+
+            //Add columns to datatable
+            if (!customersTable.Columns.Contains("ID")) { customersTable.Columns.Add("ID", typeof(string)); }
+            if (!customersTable.Columns.Contains("Name")) { customersTable.Columns.Add("Name", typeof(string)); }
+            if (!customersTable.Columns.Contains("Address")) { customersTable.Columns.Add("Address", typeof(string)); }
+            if (!customersTable.Columns.Contains("Address_Cont")) { customersTable.Columns.Add("Address_Cont", typeof(string)); }
+            if (!customersTable.Columns.Contains("City")) { customersTable.Columns.Add("City", typeof(string)); }
+            if (!customersTable.Columns.Contains("Postal Code")) { customersTable.Columns.Add("Postal Code", typeof(string)); }
+            if (!customersTable.Columns.Contains("Country")) { customersTable.Columns.Add("Country", typeof(string)); }
+            if (!customersTable.Columns.Contains("Phone")) { customersTable.Columns.Add("Phone", typeof(string)); }
+
+            try
+            {
+
+                Connect();
+                var selectCustomer = "select customer.customerId, customer.customerName, address.address, address.address2, city.city, address.postalCode, country.country, address.phone from customer join address on customer.addressId = address.addressId join city on address.cityId = city.cityId join country on city.countryId = country.countryId; ";
+                MySqlCommand command = new MySqlCommand(selectCustomer, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        customersTable.Rows.Add(reader["customerId"], reader["customerName"], reader["address"], reader["address2"], reader["city"], reader["postalCode"], reader["country"], reader["phone"]);
+                    }
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting appointments: " + ex);
+            }
+
+            Disconnect();
+            return customersTable;
+        }
+
     }
+
 }
+

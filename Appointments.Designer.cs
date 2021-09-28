@@ -123,7 +123,7 @@ namespace AndrewHowardSchedulerApp
             // 
             this.apptEndLabel.AutoSize = true;
             this.apptEndLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.apptEndLabel.Location = new System.Drawing.Point(717, 686);
+            this.apptEndLabel.Location = new System.Drawing.Point(718, 735);
             this.apptEndLabel.Name = "apptEndLabel";
             this.apptEndLabel.Size = new System.Drawing.Size(32, 16);
             this.apptEndLabel.TabIndex = 47;
@@ -133,7 +133,7 @@ namespace AndrewHowardSchedulerApp
             // 
             this.apptStartLabel.AutoSize = true;
             this.apptStartLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.apptStartLabel.Location = new System.Drawing.Point(717, 641);
+            this.apptStartLabel.Location = new System.Drawing.Point(718, 686);
             this.apptStartLabel.Name = "apptStartLabel";
             this.apptStartLabel.Size = new System.Drawing.Size(35, 16);
             this.apptStartLabel.TabIndex = 46;
@@ -160,7 +160,7 @@ namespace AndrewHowardSchedulerApp
             // apptEndPicker
             // 
             this.apptEndPicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.apptEndPicker.Location = new System.Drawing.Point(720, 705);
+            this.apptEndPicker.Location = new System.Drawing.Point(721, 755);
             this.apptEndPicker.Margin = new System.Windows.Forms.Padding(2);
             this.apptEndPicker.Name = "apptEndPicker";
             this.apptEndPicker.Size = new System.Drawing.Size(229, 20);
@@ -170,7 +170,7 @@ namespace AndrewHowardSchedulerApp
             // apptStartPicker
             // 
             this.apptStartPicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.apptStartPicker.Location = new System.Drawing.Point(720, 660);
+            this.apptStartPicker.Location = new System.Drawing.Point(721, 706);
             this.apptStartPicker.Margin = new System.Windows.Forms.Padding(2);
             this.apptStartPicker.Name = "apptStartPicker";
             this.apptStartPicker.Size = new System.Drawing.Size(229, 20);
@@ -262,7 +262,7 @@ namespace AndrewHowardSchedulerApp
             // 
             // apptTitleField
             // 
-            this.apptTitleField.Location = new System.Drawing.Point(472, 660);
+            this.apptTitleField.Location = new System.Drawing.Point(595, 652);
             this.apptTitleField.Name = "apptTitleField";
             this.apptTitleField.Size = new System.Drawing.Size(229, 20);
             this.apptTitleField.TabIndex = 59;
@@ -271,7 +271,7 @@ namespace AndrewHowardSchedulerApp
             // 
             this.apptTitleLabel.AutoSize = true;
             this.apptTitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.apptTitleLabel.Location = new System.Drawing.Point(469, 641);
+            this.apptTitleLabel.Location = new System.Drawing.Point(592, 633);
             this.apptTitleLabel.Name = "apptTitleLabel";
             this.apptTitleLabel.Size = new System.Drawing.Size(34, 16);
             this.apptTitleLabel.TabIndex = 60;

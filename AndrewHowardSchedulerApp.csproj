@@ -73,7 +73,7 @@
     <Compile Include="DataClasses\Country.cs" />
     <Compile Include="DataClasses\Customer.cs" />
     <Compile Include="DataClasses\User.cs" />
-    <Compile Include="DB\Database.cs" />
+    <Compile Include="DB\DataOperations.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>

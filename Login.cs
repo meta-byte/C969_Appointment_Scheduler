@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Data;
 using System.IO;
 using AndrewHowardSchedulerApp.DataClasses;
 using System.Threading.Tasks;
@@ -69,13 +68,15 @@ namespace AndrewHowardSchedulerApp
         {
             string username = loginUserField.Text;
             string password = loginPasswordField.Text;
-            var user = DB.Database.Login(username, password);
+            DB.DataOperations.Login(username, password);
 
-            if (user != null)
+            var currentUser = User.UserID;
+
+            if (currentUser != 0)
             {
 
                 this.Hide();
-                Appointments Appointments = new Appointments(user);
+                Appointments Appointments = new Appointments(currentUser);
                 Appointments.ShowDialog();
                 this.Close();
             }

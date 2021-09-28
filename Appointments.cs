@@ -15,16 +15,17 @@ namespace AndrewHowardSchedulerApp
 {
     public partial class Appointments : Form
     {
-        public Appointments(User user)
+
+        public Appointments(int userID)
         {
             InitializeComponent();
-            LoadAppointments(user);
+            LoadAppointments(userID);
         }
 
-        public void LoadAppointments(User user)
+        public void LoadAppointments(int userID)
         {
             apptDayViewRadio.Checked = true;
-            var appointmentsTable = Database.GetAppointments(user.UserID);
+            var appointmentsTable = DataOperations.GetAppointments(userID);
             var appointmentsSource = new BindingSource();
             appointmentsSource.DataSource = appointmentsTable;
 
@@ -47,7 +48,8 @@ namespace AndrewHowardSchedulerApp
         private void customersButton_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Customers Customers = new Customers();
+            int currentUser = User.UserID;
+            Customers Customers = new Customers(currentUser);
             Customers.ShowDialog();
             this.Close();
         }

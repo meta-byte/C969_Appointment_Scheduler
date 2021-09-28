@@ -21,17 +21,18 @@ namespace AndrewHowardSchedulerApp
 
         private void appointmentsButton_Click(object sender, EventArgs e)
         {
-            var user = new User();
+            int currentUser = User.UserID;
             this.Hide();
-            Appointments Appointments = new Appointments(user);
+            Appointments Appointments = new Appointments(currentUser);
             Appointments.ShowDialog();
             this.Close();
         }
 
         private void customersButton_Click(object sender, EventArgs e)
         {
+            int currentUser = User.UserID;
             this.Hide();
-            Customers Customers = new Customers();
+            Customers Customers = new Customers(currentUser);
             Customers.ShowDialog();
             this.Close();
         }
