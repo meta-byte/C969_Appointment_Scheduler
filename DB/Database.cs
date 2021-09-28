@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
+using System.IO;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 
@@ -29,70 +31,107 @@ namespace AndrewHowardSchedulerApp.DB
             return;
         }
 
+        public static void Disconnect()
+        {
+            if(connection.State != System.Data.ConnectionState.Closed)
+            {
+                connection.Close();
+            }
+            return;
+        }
+
         public static DataClasses.User Login(string username, string password)
         {
             DataClasses.User user = new DataClasses.User();
 
-            Connect();
-            var selectUser = "SELECT * FROM user WHERE userName='" + username + "' AND password='" + password + "';";
-            MySqlCommand cmd = new MySqlCommand(selectUser, connection);
-            MySqlDataReader rdr = cmd.ExecuteReader();
+            try
+            {
 
-            if (rdr.HasRows){
-                while (rdr.Read())
+                Connect();
+                var selectUser = "SELECT * FROM user WHERE userName='" + username + "' AND password='" + password + "';";
+                MySqlCommand command = new MySqlCommand(selectUser, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
                 {
-                    var foundID = rdr["userId"].ToString();
-                    var foundUsername = rdr["userName"].ToString();
-                    var foundPassword = rdr["password"].ToString();
-                    var foundCreateDate = rdr["createDate"];
-                    var foundCreatedBy = rdr["createdBy"].ToString();
-                    var foundLastUpdate = rdr["lastUpdate"];
-                    var foundLastUpdateBy = rdr["lastUpdateBy"].ToString();
-
-
-                    if (foundUsername != username || foundPassword != password)
+                    while (reader.Read())
                     {
-                        user = null;
-                        return user;
-                    }
-                    else
-                    {
-                        user.UserID = int.Parse(foundID);
-                        user.Username = foundUsername;
-                        user.Password = foundPassword;
-                        user.CreateDate = (DateTime)foundCreateDate;
-                        user.CreatedBy = foundCreatedBy;
-                        user.LastUpdated = (DateTime)foundLastUpdate;
-                        user.LastUpdatedBy = foundLastUpdateBy;
+                        var foundID = reader["userId"].ToString();
+                        var foundUsername = reader["userName"].ToString();
+                        var foundPassword = reader["password"].ToString();
+                        var foundCreateDate = reader["createDate"];
+                        var foundCreatedBy = reader["createdBy"].ToString();
+                        var foundLastUpdate = reader["lastUpdate"];
+                        var foundLastUpdateBy = reader["lastUpdateBy"].ToString();
 
-                        return user;
-                    }
 
+                        if (foundUsername != username || foundPassword != password)
+                        {
+                            user = null;
+                        }
+                        else
+                        {
+                            user.UserID = int.Parse(foundID);
+                            user.Username = foundUsername;
+                            user.Password = foundPassword;
+                            user.CreateDate = (DateTime)foundCreateDate;
+                            user.CreatedBy = foundCreatedBy;
+                            user.LastUpdated = (DateTime)foundLastUpdate;
+                            user.LastUpdatedBy = foundLastUpdateBy;
+
+
+                        }
+
+                    }
                 }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error during login: " + ex);
             }
 
-            user = null;
-            return user; 
+            Disconnect();
+            return user;
+
         }
 
-        public static void GetAppointments(string userID)
+        public static DataTable GetAppointments(int userID)
         {
-            Connect();
-            var selectAppointment = "select * from appointment where userId = '" + userID + "';";
-            MySqlCommand cmd = new MySqlCommand(selectAppointment, connection);
-            MySqlDataReader rdr = cmd.ExecuteReader();
-            MySqlDataAdapter dataAdapter = new MySqlDataAdapter();
-            dataAdapter.SelectCommand = cmd;
-            
-            
-            if (rdr.HasRows)
-            {
-                while (rdr.Read())
-                {
+            DataTable appoinmentsTable = new DataTable();
 
+            //Add columns to datatable
+            if (!appoinmentsTable.Columns.Contains("Title")) { appoinmentsTable.Columns.Add("Title", typeof(string)); }
+            if (!appoinmentsTable.Columns.Contains("Customer")) { appoinmentsTable.Columns.Add("Customer", typeof(string)); }
+            if (!appoinmentsTable.Columns.Contains("Type")) { appoinmentsTable.Columns.Add("Type", typeof(string)); }
+            if (!appoinmentsTable.Columns.Contains("Start")) { appoinmentsTable.Columns.Add("Start", typeof(string)); }
+            if (!appoinmentsTable.Columns.Contains("End")) { appoinmentsTable.Columns.Add("End", typeof(string)); }
+
+            try
+            {
+
+                Connect();
+                var selectAppointment = "select appointment.title, customer.customerName, appointment.type, appointment.start, appointment.end from appointment join customer on appointment.customerId = customer.customerId where userId = '" + userID + "';";
+                MySqlCommand command = new MySqlCommand(selectAppointment, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        appoinmentsTable.Rows.Add(reader["title"], reader["customerName"], reader["type"], reader["start"], reader["end"]);
+                    }
                 }
+
             }
 
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting appointments: " + ex);
+            }
+
+            Disconnect();
+            return appoinmentsTable;
         }
 
     }

@@ -5,6 +5,9 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Data;
+using System.IO;
+using AndrewHowardSchedulerApp.DataClasses;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
@@ -25,10 +28,10 @@ namespace AndrewHowardSchedulerApp
 
         private void detectLanguage()
         {
-            switch (RegionInfo.CurrentRegion.EnglishName)
+            switch (CultureInfo.CurrentCulture.TwoLetterISOLanguageName)
             {
 
-                case "Japan":
+                case "ja":
                     japaneseLogin();
                     break;
 

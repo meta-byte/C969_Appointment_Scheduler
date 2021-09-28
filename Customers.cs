@@ -5,6 +5,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO;
+using AndrewHowardSchedulerApp.DataClasses;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,7 +21,7 @@ namespace AndrewHowardSchedulerApp
 
         private void appointmentsButton_Click(object sender, EventArgs e)
         {
-            var user = new DataClasses.User();
+            var user = new User();
 
             this.Hide();
             Appointments Appointments = new Appointments(user);

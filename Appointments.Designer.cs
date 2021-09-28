@@ -49,6 +49,8 @@ namespace AndrewHowardSchedulerApp
             this.customersButton = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
             this.apptTitle = new System.Windows.Forms.Label();
+            this.apptTitleField = new System.Windows.Forms.TextBox();
+            this.apptTitleLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.apptDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -112,16 +114,16 @@ namespace AndrewHowardSchedulerApp
             // apptTypeComboBox
             // 
             this.apptTypeComboBox.FormattingEnabled = true;
-            this.apptTypeComboBox.Location = new System.Drawing.Point(449, 710);
+            this.apptTypeComboBox.Location = new System.Drawing.Point(472, 754);
             this.apptTypeComboBox.Name = "apptTypeComboBox";
-            this.apptTypeComboBox.Size = new System.Drawing.Size(360, 21);
+            this.apptTypeComboBox.Size = new System.Drawing.Size(229, 21);
             this.apptTypeComboBox.TabIndex = 50;
             // 
             // apptEndLabel
             // 
             this.apptEndLabel.AutoSize = true;
             this.apptEndLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.apptEndLabel.Location = new System.Drawing.Point(446, 797);
+            this.apptEndLabel.Location = new System.Drawing.Point(717, 686);
             this.apptEndLabel.Name = "apptEndLabel";
             this.apptEndLabel.Size = new System.Drawing.Size(32, 16);
             this.apptEndLabel.TabIndex = 47;
@@ -131,7 +133,7 @@ namespace AndrewHowardSchedulerApp
             // 
             this.apptStartLabel.AutoSize = true;
             this.apptStartLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.apptStartLabel.Location = new System.Drawing.Point(446, 746);
+            this.apptStartLabel.Location = new System.Drawing.Point(717, 641);
             this.apptStartLabel.Name = "apptStartLabel";
             this.apptStartLabel.Size = new System.Drawing.Size(35, 16);
             this.apptStartLabel.TabIndex = 46;
@@ -141,7 +143,7 @@ namespace AndrewHowardSchedulerApp
             // 
             this.apptCustomerLabel.AutoSize = true;
             this.apptCustomerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.apptCustomerLabel.Location = new System.Drawing.Point(446, 642);
+            this.apptCustomerLabel.Location = new System.Drawing.Point(469, 686);
             this.apptCustomerLabel.Name = "apptCustomerLabel";
             this.apptCustomerLabel.Size = new System.Drawing.Size(65, 16);
             this.apptCustomerLabel.TabIndex = 45;
@@ -150,28 +152,28 @@ namespace AndrewHowardSchedulerApp
             // apptCustomerComboBox
             // 
             this.apptCustomerComboBox.FormattingEnabled = true;
-            this.apptCustomerComboBox.Location = new System.Drawing.Point(449, 661);
+            this.apptCustomerComboBox.Location = new System.Drawing.Point(472, 705);
             this.apptCustomerComboBox.Name = "apptCustomerComboBox";
-            this.apptCustomerComboBox.Size = new System.Drawing.Size(360, 21);
+            this.apptCustomerComboBox.Size = new System.Drawing.Size(229, 21);
             this.apptCustomerComboBox.TabIndex = 44;
             // 
             // apptEndPicker
             // 
             this.apptEndPicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.apptEndPicker.Location = new System.Drawing.Point(449, 814);
+            this.apptEndPicker.Location = new System.Drawing.Point(720, 705);
             this.apptEndPicker.Margin = new System.Windows.Forms.Padding(2);
             this.apptEndPicker.Name = "apptEndPicker";
-            this.apptEndPicker.Size = new System.Drawing.Size(360, 20);
+            this.apptEndPicker.Size = new System.Drawing.Size(229, 20);
             this.apptEndPicker.TabIndex = 43;
             this.apptEndPicker.Value = new System.DateTime(2021, 1, 3, 12, 0, 0, 0);
             // 
             // apptStartPicker
             // 
             this.apptStartPicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.apptStartPicker.Location = new System.Drawing.Point(449, 764);
+            this.apptStartPicker.Location = new System.Drawing.Point(720, 660);
             this.apptStartPicker.Margin = new System.Windows.Forms.Padding(2);
             this.apptStartPicker.Name = "apptStartPicker";
-            this.apptStartPicker.Size = new System.Drawing.Size(360, 20);
+            this.apptStartPicker.Size = new System.Drawing.Size(229, 20);
             this.apptStartPicker.TabIndex = 42;
             this.apptStartPicker.Value = new System.DateTime(2021, 1, 3, 0, 0, 0, 0);
             // 
@@ -179,7 +181,7 @@ namespace AndrewHowardSchedulerApp
             // 
             this.apptTypeLabel.AutoSize = true;
             this.apptTypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.apptTypeLabel.Location = new System.Drawing.Point(446, 691);
+            this.apptTypeLabel.Location = new System.Drawing.Point(469, 735);
             this.apptTypeLabel.Name = "apptTypeLabel";
             this.apptTypeLabel.Size = new System.Drawing.Size(40, 16);
             this.apptTypeLabel.TabIndex = 41;
@@ -188,7 +190,7 @@ namespace AndrewHowardSchedulerApp
             // apptEditButton
             // 
             this.apptEditButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.apptEditButton.Location = new System.Drawing.Point(850, 724);
+            this.apptEditButton.Location = new System.Drawing.Point(664, 796);
             this.apptEditButton.Name = "apptEditButton";
             this.apptEditButton.Size = new System.Drawing.Size(99, 38);
             this.apptEditButton.TabIndex = 51;
@@ -198,7 +200,7 @@ namespace AndrewHowardSchedulerApp
             // apptAddButton
             // 
             this.apptAddButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.apptAddButton.Location = new System.Drawing.Point(850, 651);
+            this.apptAddButton.Location = new System.Drawing.Point(472, 796);
             this.apptAddButton.Name = "apptAddButton";
             this.apptAddButton.Size = new System.Drawing.Size(99, 38);
             this.apptAddButton.TabIndex = 52;
@@ -208,7 +210,7 @@ namespace AndrewHowardSchedulerApp
             // apptDeleteButton
             // 
             this.apptDeleteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.apptDeleteButton.Location = new System.Drawing.Point(850, 797);
+            this.apptDeleteButton.Location = new System.Drawing.Point(850, 796);
             this.apptDeleteButton.Name = "apptDeleteButton";
             this.apptDeleteButton.Size = new System.Drawing.Size(99, 38);
             this.apptDeleteButton.TabIndex = 53;
@@ -258,11 +260,30 @@ namespace AndrewHowardSchedulerApp
             this.apptTitle.TabIndex = 58;
             this.apptTitle.Text = "Appointments";
             // 
+            // apptTitleField
+            // 
+            this.apptTitleField.Location = new System.Drawing.Point(472, 660);
+            this.apptTitleField.Name = "apptTitleField";
+            this.apptTitleField.Size = new System.Drawing.Size(229, 20);
+            this.apptTitleField.TabIndex = 59;
+            // 
+            // apptTitleLabel
+            // 
+            this.apptTitleLabel.AutoSize = true;
+            this.apptTitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.apptTitleLabel.Location = new System.Drawing.Point(469, 641);
+            this.apptTitleLabel.Name = "apptTitleLabel";
+            this.apptTitleLabel.Size = new System.Drawing.Size(34, 16);
+            this.apptTitleLabel.TabIndex = 60;
+            this.apptTitleLabel.Text = "Title";
+            // 
             // Appointments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 861);
+            this.Controls.Add(this.apptTitleLabel);
+            this.Controls.Add(this.apptTitleField);
             this.Controls.Add(this.apptTitle);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.reportsButton);
@@ -294,10 +315,6 @@ namespace AndrewHowardSchedulerApp
         #endregion
         private System.Windows.Forms.DataGridView apptDataGrid;
         private System.Windows.Forms.Label apptViewOptionsLabel;
-        private System.Windows.Forms.Label apptEndLabel;
-        private System.Windows.Forms.Label apptStartLabel;
-        private System.Windows.Forms.Label apptCustomerLabel;
-        private System.Windows.Forms.Label apptTypeLabel;
         public System.Windows.Forms.Button reportsButton;
         public System.Windows.Forms.Button customersButton;
         public System.Windows.Forms.Button exitButton;
@@ -312,5 +329,11 @@ namespace AndrewHowardSchedulerApp
         public System.Windows.Forms.RadioButton apptWeekViewRadio;
         public System.Windows.Forms.RadioButton apptDayViewRadio;
         public System.Windows.Forms.Label apptTitle;
+        public System.Windows.Forms.Label apptEndLabel;
+        public System.Windows.Forms.Label apptStartLabel;
+        public System.Windows.Forms.Label apptCustomerLabel;
+        public System.Windows.Forms.Label apptTypeLabel;
+        public System.Windows.Forms.TextBox apptTitleField;
+        public System.Windows.Forms.Label apptTitleLabel;
     }
 }

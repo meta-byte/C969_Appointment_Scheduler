@@ -5,6 +5,9 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO;
+using AndrewHowardSchedulerApp.DataClasses;
+using AndrewHowardSchedulerApp.DB;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,10 +15,33 @@ namespace AndrewHowardSchedulerApp
 {
     public partial class Appointments : Form
     {
-        public Appointments(DataClasses.User user)
+        public Appointments(User user)
         {
             InitializeComponent();
+            LoadAppointments(user);
+        }
+
+        public void LoadAppointments(User user)
+        {
             apptDayViewRadio.Checked = true;
+            var appointmentsTable = Database.GetAppointments(user.UserID);
+            var appointmentsSource = new BindingSource();
+            appointmentsSource.DataSource = appointmentsTable;
+
+            apptDataGrid.RowHeadersVisible = false;
+            apptDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            apptDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            apptDataGrid.MultiSelect = false;
+            apptDataGrid.RowPrePaint += new DataGridViewRowPrePaintEventHandler(dgv_RowPrePaint);
+            apptDataGrid.DataSource = null;
+            apptDataGrid.DataSource = appointmentsSource;
+
+
+        }
+
+        private void dgv_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            e.PaintParts &= ~DataGridViewPaintParts.Focus;
         }
 
         private void customersButton_Click(object sender, EventArgs e)
@@ -53,5 +79,6 @@ namespace AndrewHowardSchedulerApp
         {
             apptTitle.Text = "Appointments Today";
         }
+
     }
 }
