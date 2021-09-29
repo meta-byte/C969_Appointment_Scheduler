@@ -35,6 +35,9 @@ namespace AndrewHowardSchedulerApp
             custDataGrid.DataSource = null;
             custDataGrid.DataSource = customerSource;
 
+            var countriesTable = DataOperations.GetCountries();
+            var countriesList = (from DataRow row in countriesTable.Rows select row["Country"]).ToList();
+            custCountryComboBox.DataSource = countriesList;
 
         }
         private void dgv_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
@@ -64,5 +67,58 @@ namespace AndrewHowardSchedulerApp
         {
             Application.Exit();
         }
+
+        private void custAddButton_Click(object sender, EventArgs e)
+        {
+            string selectedCity = custCityComboBox.SelectedItem.ToString();
+            int cityId = int.Parse(DataOperations.GetCity(selectedCity));
+
+            Address address = new Address();
+
+            address.Address1 = custAddressField.Text;
+            address.Address2 = custAddressFieldTwo.Text;
+            address.PostalCode = custZipField.Text;
+            address.Phone = custPhoneField.Text;
+            address.CityID = cityId;
+
+            DataOperations.AddAddress(address);
+            int addressId = int.Parse(DataOperations.GetAddress(address.Address1));
+
+            Customer customer = new Customer();
+
+            customer.CustomerName = custNameField.Text;
+            customer.AddressID = addressId;
+            customer.Active = 1;
+
+
+            DataOperations.AddCustomer(customer);
+
+            LoadCustomers();
+        }
+
+        private void custEditButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void custDeleteButton_Click(object sender, EventArgs e)
+        {
+            string customerName = custDataGrid.CurrentRow.Cells[1].Value.ToString();
+            int.TryParse(DataOperations.GetCustomer(customerName), out int customerID);
+
+            DataOperations.DeleteCustomer(customerID);
+
+        }
+
+        private void custCountryBox_SelectionChanged(object sender, EventArgs e)
+        {
+            string selectedCountry = custCountryComboBox.SelectedItem.ToString();
+            int countryId = int.Parse(DataOperations.GetCountry(selectedCountry));
+
+            var citiesTable = DataOperations.GetCities(countryId);
+            var citiesList = (from DataRow row in citiesTable.Rows select row["City"]).ToList();
+            custCityComboBox.DataSource = citiesList;
+        }
+
     }
 }

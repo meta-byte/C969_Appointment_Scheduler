@@ -55,12 +55,12 @@ namespace AndrewHowardSchedulerApp
             // 
             // custCountryComboBox
             // 
-            this.custCountryComboBox.Enabled = false;
             this.custCountryComboBox.FormattingEnabled = true;
             this.custCountryComboBox.Location = new System.Drawing.Point(413, 749);
             this.custCountryComboBox.Name = "custCountryComboBox";
             this.custCountryComboBox.Size = new System.Drawing.Size(238, 21);
             this.custCountryComboBox.TabIndex = 27;
+            this.custCountryComboBox.SelectedValueChanged += new System.EventHandler(this.custCountryBox_SelectionChanged);
             // 
             // custNameLabel
             // 
@@ -74,7 +74,6 @@ namespace AndrewHowardSchedulerApp
             // 
             // custNameField
             // 
-            this.custNameField.Enabled = false;
             this.custNameField.Location = new System.Drawing.Point(413, 596);
             this.custNameField.Name = "custNameField";
             this.custNameField.Size = new System.Drawing.Size(238, 20);
@@ -82,7 +81,6 @@ namespace AndrewHowardSchedulerApp
             // 
             // custCityComboBox
             // 
-            this.custCityComboBox.Enabled = false;
             this.custCityComboBox.FormattingEnabled = true;
             this.custCityComboBox.Location = new System.Drawing.Point(413, 801);
             this.custCityComboBox.Name = "custCityComboBox";
@@ -91,7 +89,6 @@ namespace AndrewHowardSchedulerApp
             // 
             // custPhoneField
             // 
-            this.custPhoneField.Enabled = false;
             this.custPhoneField.Location = new System.Drawing.Point(675, 801);
             this.custPhoneField.Name = "custPhoneField";
             this.custPhoneField.Size = new System.Drawing.Size(139, 20);
@@ -159,7 +156,6 @@ namespace AndrewHowardSchedulerApp
             // 
             // custZipField
             // 
-            this.custZipField.Enabled = false;
             this.custZipField.Location = new System.Drawing.Point(675, 749);
             this.custZipField.Name = "custZipField";
             this.custZipField.Size = new System.Drawing.Size(139, 20);
@@ -167,7 +163,6 @@ namespace AndrewHowardSchedulerApp
             // 
             // custAddressFieldTwo
             // 
-            this.custAddressFieldTwo.Enabled = false;
             this.custAddressFieldTwo.Location = new System.Drawing.Point(413, 692);
             this.custAddressFieldTwo.Name = "custAddressFieldTwo";
             this.custAddressFieldTwo.Size = new System.Drawing.Size(401, 20);
@@ -175,7 +170,6 @@ namespace AndrewHowardSchedulerApp
             // 
             // custAddressField
             // 
-            this.custAddressField.Enabled = false;
             this.custAddressField.Location = new System.Drawing.Point(413, 643);
             this.custAddressField.Name = "custAddressField";
             this.custAddressField.Size = new System.Drawing.Size(401, 20);
@@ -183,6 +177,7 @@ namespace AndrewHowardSchedulerApp
             // 
             // custDataGrid
             // 
+            this.custDataGrid.AllowUserToAddRows = false;
             this.custDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.custDataGrid.Location = new System.Drawing.Point(24, 29);
             this.custDataGrid.Name = "custDataGrid";
@@ -222,6 +217,7 @@ namespace AndrewHowardSchedulerApp
             this.custDeleteButton.TabIndex = 62;
             this.custDeleteButton.Text = "Delete";
             this.custDeleteButton.UseVisualStyleBackColor = true;
+            this.custDeleteButton.Click += new System.EventHandler(this.custDeleteButton_Click);
             // 
             // custAddButton
             // 
@@ -232,6 +228,7 @@ namespace AndrewHowardSchedulerApp
             this.custAddButton.TabIndex = 61;
             this.custAddButton.Text = "Add";
             this.custAddButton.UseVisualStyleBackColor = true;
+            this.custAddButton.Click += new System.EventHandler(this.custAddButton_Click);
             // 
             // custEditButton
             // 
@@ -242,6 +239,7 @@ namespace AndrewHowardSchedulerApp
             this.custEditButton.TabIndex = 60;
             this.custEditButton.Text = "Edit";
             this.custEditButton.UseVisualStyleBackColor = true;
+            this.custEditButton.Click += new System.EventHandler(this.custEditButton_Click);
             // 
             // appointmentsButton
             // 

@@ -33,6 +33,11 @@ namespace AndrewHowardSchedulerApp.DataClasses
         public DateTime LastUpdate { get; set; }
         public string LastUpdateBy { get; set; }
 
+
+        public Address()
+        {
+
+        }
         public Address(int addressID, string address1, string address2, int cityID, string postalCode, string phone, DateTime createDate, string createdBy, DateTime lastUpdate, string lastUpdateBy)
         {
             AddressID = addressID;

@@ -41,7 +41,7 @@ namespace AndrewHowardSchedulerApp
 
 
             //Combo Boxes Pickers and Text Boxes
-            apptTypeComboBox.DataSource = new[]{ "Scrum", "Presentation", "Interview" };
+            apptTypeComboBox.DataSource = new[]{ "Scrum", "Presentation", "Interview", "Coffee", "Consulation" };
             var customerTable = DataOperations.GetCustomers();
             var customerList = (from DataRow row in customerTable.Rows select row["Name"]).ToList();
             apptCustomerComboBox.DataSource = customerList;
@@ -109,7 +109,6 @@ namespace AndrewHowardSchedulerApp
             appointment.End = apptEndPicker.Value;
 
             DataOperations.AddAppointment(appointment);
-            DataOperations.GetAppointments(User.UserID);
             LoadAppointments(User.UserID);
         }
 
@@ -131,7 +130,6 @@ namespace AndrewHowardSchedulerApp
             appointment.End = apptEndPicker.Value;
 
             DataOperations.EditAppointment(appointment);
-            DataOperations.GetAppointments(User.UserID);
             LoadAppointments(User.UserID);
         }
 
@@ -140,7 +138,6 @@ namespace AndrewHowardSchedulerApp
             int selectedAppointmentId = int.Parse(apptDataGrid.CurrentRow.Cells[0].Value.ToString());
             DataOperations.DeleteAppointment(selectedAppointmentId);
 
-            DataOperations.GetAppointments(User.UserID);
             LoadAppointments(User.UserID);
         }
 

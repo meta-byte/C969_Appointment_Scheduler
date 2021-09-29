@@ -56,6 +56,7 @@ namespace AndrewHowardSchedulerApp
             // 
             // apptDataGrid
             // 
+            this.apptDataGrid.AllowUserToAddRows = false;
             this.apptDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.apptDataGrid.Location = new System.Drawing.Point(39, 67);
             this.apptDataGrid.Name = "apptDataGrid";

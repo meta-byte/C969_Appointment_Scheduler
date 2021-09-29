@@ -295,7 +295,297 @@ namespace AndrewHowardSchedulerApp.DB
             return customersTable;
         }
 
+        public static void AddCustomer(Customer customer)
+        {
+            string customerName = customer.CustomerName;
+            int addressId = customer.AddressID;
+            int active = customer.Active;
+            string createDate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string createdBy = User.Username;
+            string lastUpdate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string lastUpdateBy = User.Username;
 
+            try
+            {
+                Connect();
+                var insertCustomer = "insert into customer(customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) values('" + customerName + "', '" + addressId + "', '" + active + "', '" + createDate + "', '" + createdBy + "', '" + lastUpdate + "', '" + lastUpdateBy + "' );";
+                MySqlCommand command = new MySqlCommand(insertCustomer, connection);
+                Console.WriteLine(command.CommandText);
+                command.ExecuteNonQuery();
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error adding customer: " + ex);
+
+            }
+            Disconnect();
+        }
+
+        public static void DeleteCustomer(int customerId)
+        {
+
+            try
+            {
+                Connect();
+                var deleteCustomer = "delete from customer where customerId = '" + customerId + "';";
+                MySqlCommand command = new MySqlCommand(deleteCustomer, connection);
+                Console.WriteLine(command.CommandText);
+                command.ExecuteNonQuery();
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error deleting customer: " + ex);
+
+            }
+            Disconnect();
+        }
+
+        public static void AddCountry(Country country)
+        {
+            string countryName = country.CountryName;
+            string createDate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string createdBy = User.Username;
+            string lastUpdate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string lastUpdateBy = User.Username;
+
+            try
+            {
+                Connect();
+                var insertCountry = "insert into country(country, createDate, createdBy, lastUpdate, lastUpdateBy) values('" + countryName + "', '" + createDate + "', '" + createdBy + "', '" + lastUpdate + "', '" + lastUpdateBy + "' );";
+                MySqlCommand command = new MySqlCommand(insertCountry, connection);
+                Console.WriteLine(command.CommandText);
+                command.ExecuteNonQuery();
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error adding country: " + ex);
+
+            }
+            Disconnect();
+        }
+
+        public static DataTable GetCountries()
+        {
+            DataTable countriesTable = new DataTable();
+
+            //Add columns to datatable
+            if (!countriesTable.Columns.Contains("ID")) { countriesTable.Columns.Add("ID", typeof(string)); }
+            if (!countriesTable.Columns.Contains("Country")) { countriesTable.Columns.Add("Country", typeof(string)); }
+
+
+            try
+            {
+
+                Connect();
+                var selectCountries = "select * from country";
+                MySqlCommand command = new MySqlCommand(selectCountries, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        countriesTable.Rows.Add(reader["countryId"], reader["country"]);
+                    }
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting countries: " + ex);
+            }
+
+            Disconnect();
+            return countriesTable;
+        }
+
+        public static string GetCountry(string countryName)
+        {
+            string countryID = null;
+
+            try
+            {
+                Connect();
+                var selectCountry = "select countryId from country where country = '" + countryName + "';";
+
+                MySqlCommand command = new MySqlCommand(selectCountry, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        countryID = reader["countryId"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting countryId: " + ex);
+
+            }
+
+            Disconnect();
+            return countryID;
+        }
+
+        public static void AddCity(City city)
+        {
+            string cityName = city.CityName;
+            int countryId = city.CountryID;
+            string createDate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string createdBy = User.Username;
+            string lastUpdate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string lastUpdateBy = User.Username;
+
+            try
+            {
+                Connect();
+                var insertCity = "insert into city(country, createDate, createdBy, lastUpdate, lastUpdateBy) values('" + cityName + "', '" + countryId + "', '" + createDate + "', '" + createdBy + "', '" + lastUpdate + "', '" + lastUpdateBy + "' );";
+                MySqlCommand command = new MySqlCommand(insertCity, connection);
+                Console.WriteLine(command.CommandText);
+                command.ExecuteNonQuery();
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error adding city: " + ex);
+
+            }
+            Disconnect();
+        }
+
+        public static DataTable GetCities(int countryId)
+        {
+            DataTable citiesTable = new DataTable();
+
+            //Add columns to datatable
+            if (!citiesTable.Columns.Contains("ID")) { citiesTable.Columns.Add("ID", typeof(string)); }
+            if (!citiesTable.Columns.Contains("City")) { citiesTable.Columns.Add("City", typeof(string)); }
+            if (!citiesTable.Columns.Contains("CountryId")) { citiesTable.Columns.Add("CountryId", typeof(string)); }
+
+
+            try
+            {
+
+                Connect();
+                var selectCities = "select * from city where countryId = '" + countryId + "';" ;
+                MySqlCommand command = new MySqlCommand(selectCities, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        citiesTable.Rows.Add(reader["cityId"], reader["city"], reader["countryId"]);
+                    }
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting cities: " + ex);
+            }
+
+            Disconnect();
+            return citiesTable;
+        }
+
+        public static string GetCity(string city)
+        {
+            string cityId = null;
+
+            try
+            {
+                Connect();
+                var selectCity = "select cityId from city where city = '" + city + "';";
+
+                MySqlCommand command = new MySqlCommand(selectCity, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        cityId = reader["cityId"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting cityId: " + ex);
+
+            }
+
+            Disconnect();
+            return cityId;
+        }
+
+        public static void AddAddress(Address address)
+        {
+            string address1 = address.Address1;
+            string address2 = address.Address2;
+            int cityId = address.CityID;
+            string postalCode = address.PostalCode;
+            string phone = address.Phone;
+            string createDate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string createdBy = User.Username;
+            string lastUpdate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string lastUpdateBy = User.Username;
+
+            try
+            {
+                Connect();
+                var insertAddress = "insert into address(address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy) values('" + address1 + "', '" + address2 + "', '" + cityId + "', '" + postalCode + "', '" + phone + "', '" + createDate + "', '" + createdBy + "', '" + lastUpdate + "', '" + lastUpdateBy + "' );";
+                MySqlCommand command = new MySqlCommand(insertAddress, connection);
+                Console.WriteLine(command.CommandText);
+                command.ExecuteNonQuery();
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error adding address: " + ex);
+
+            }
+            Disconnect();
+        }
+
+        public static string GetAddress(string address)
+        {
+            string addressId = null;
+
+            try
+            {
+                Connect();
+                var selectAddress = "select addressId from address where address = '" + address + "';";
+
+                MySqlCommand command = new MySqlCommand(selectAddress, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        addressId = reader["addressId"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting addressId: " + ex);
+
+            }
+
+            Disconnect();
+            return addressId;
+        }
 
     }
 
