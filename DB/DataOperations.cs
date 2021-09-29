@@ -103,6 +103,7 @@ namespace AndrewHowardSchedulerApp.DB
             DataTable appoinmentsTable = new DataTable();
 
             //Add columns to datatable
+            if (!appoinmentsTable.Columns.Contains("ID")) { appoinmentsTable.Columns.Add("ID", typeof(string)); }
             if (!appoinmentsTable.Columns.Contains("Title")) { appoinmentsTable.Columns.Add("Title", typeof(string)); }
             if (!appoinmentsTable.Columns.Contains("Customer")) { appoinmentsTable.Columns.Add("Customer", typeof(string)); }
             if (!appoinmentsTable.Columns.Contains("Type")) { appoinmentsTable.Columns.Add("Type", typeof(string)); }
@@ -113,7 +114,7 @@ namespace AndrewHowardSchedulerApp.DB
             {
 
                 Connect();
-                var selectAppointment = "select appointment.title, customer.customerName, appointment.type, appointment.start, appointment.end from appointment join customer on appointment.customerId = customer.customerId where userId = '" + userID + "';";
+                var selectAppointment = "select appointment.appointmentId, appointment.title, customer.customerName, appointment.type, appointment.start, appointment.end from appointment join customer on appointment.customerId = customer.customerId where userId = '" + userID + "';";
                 MySqlCommand command = new MySqlCommand(selectAppointment, connection);
                 MySqlDataReader reader = command.ExecuteReader();
 
@@ -121,7 +122,7 @@ namespace AndrewHowardSchedulerApp.DB
                 {
                     while (reader.Read())
                     {
-                        appoinmentsTable.Rows.Add(reader["title"], reader["customerName"], reader["type"], reader["start"], reader["end"]);
+                        appoinmentsTable.Rows.Add(reader["appointmentId"], reader["title"], reader["customerName"], reader["type"], reader["start"], reader["end"]);
                     }
                 }
 
@@ -134,6 +135,123 @@ namespace AndrewHowardSchedulerApp.DB
 
             Disconnect();
             return appoinmentsTable;
+        }
+
+        public static void AddAppointment(Appointment appointment)
+        {
+            int customerId = appointment.CustomerID;
+            int userId = User.UserID;
+            string title = appointment.Title;
+            string description = appointment.Description;
+            string location = appointment.Location;
+            string contact = appointment.Contact;
+            string type = appointment.Type;
+            string url = appointment.Url;
+            string start = appointment.Start.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string end = appointment.End.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string createDate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string createdBy = User.Username;
+            string lastUpdate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string lastUpdateBy = User.Username;
+            try
+            {
+                Connect();
+                var insertAppointment = "insert into appointment(customerId, userId, title, description, location, contact, type, url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy) values('" + customerId + "', '" + userId + "', '" + title + "', '" + description + "','" + location + "', '" + contact + "', '" + type + "', '" + url + "', '" + start + "', '" + end + "', '" + createDate + "', '" + createdBy + "', '" + lastUpdate + "', '" + lastUpdateBy + "' );";
+                MySqlCommand command = new MySqlCommand(insertAppointment, connection);
+                Console.WriteLine(command.CommandText);
+                command.ExecuteNonQuery();
+                
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error adding appointment: " + ex);
+
+            }
+            Disconnect();
+        }
+
+        public static void EditAppointment(Appointment appointment)
+        {
+            int appointmentId = appointment.AppointmentID;
+            int customerId = appointment.CustomerID;
+            int userId = User.UserID;
+            string title = appointment.Title;
+            string description = appointment.Description;
+            string location = appointment.Location;
+            string contact = appointment.Contact;
+            string type = appointment.Type;
+            string url = appointment.Url;
+            string start = appointment.Start.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string end = appointment.End.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string lastUpdate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string lastUpdateBy = User.Username;
+            try
+            {
+                Connect();
+                var updateAppointment = "update appointment set customerId = '" + customerId + "', userId = '" + userId + "', title = '" + title + "', description = '" + description + "', location = '" + location + "', contact = '" + contact + "', url = '" + url + "', start = '" + start + "', end = '" + end + "', lastUpdate = '" + lastUpdate + "', lastUpdateBy = '" + lastUpdateBy + "' where appointmentId = '" + appointmentId + "';";
+                MySqlCommand command = new MySqlCommand(updateAppointment, connection);
+                Console.WriteLine(command.CommandText);
+                command.ExecuteNonQuery();
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error updating appointment: " + ex);
+
+            }
+            Disconnect();
+        }
+
+        public static void DeleteAppointment(int appointmentId)
+        {
+
+            try
+            {
+                Connect();
+                var deleteAppointment = "delete from appointment where appointmentId = '" + appointmentId + "';";
+                MySqlCommand command = new MySqlCommand(deleteAppointment, connection);
+                Console.WriteLine(command.CommandText);
+                command.ExecuteNonQuery();
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error deleting appointment: " + ex);
+
+            }
+            Disconnect();
+        }
+
+        public static string GetCustomer(string name)
+        {
+            string customerID = null;
+
+            try
+            {
+                Connect();
+                var selectCustomer = "select customerId from customer where customerName = '"+ name +"';";
+
+                MySqlCommand command = new MySqlCommand(selectCustomer, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        customerID = reader["customerId"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting customerId: " + ex);
+
+            }
+
+            Disconnect();
+            return customerID;
         }
 
         public static DataTable GetCustomers()
@@ -176,6 +294,8 @@ namespace AndrewHowardSchedulerApp.DB
             Disconnect();
             return customersTable;
         }
+
+
 
     }
 

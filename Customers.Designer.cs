@@ -30,8 +30,6 @@ namespace AndrewHowardSchedulerApp
         private void InitializeComponent()
         {
             this.custCountryComboBox = new System.Windows.Forms.ComboBox();
-            this.custIDField = new System.Windows.Forms.TextBox();
-            this.custIDLabel = new System.Windows.Forms.Label();
             this.custNameLabel = new System.Windows.Forms.Label();
             this.custNameField = new System.Windows.Forms.TextBox();
             this.custCityComboBox = new System.Windows.Forms.ComboBox();
@@ -63,24 +61,6 @@ namespace AndrewHowardSchedulerApp
             this.custCountryComboBox.Name = "custCountryComboBox";
             this.custCountryComboBox.Size = new System.Drawing.Size(238, 21);
             this.custCountryComboBox.TabIndex = 27;
-            // 
-            // custIDField
-            // 
-            this.custIDField.Enabled = false;
-            this.custIDField.Location = new System.Drawing.Point(675, 596);
-            this.custIDField.Name = "custIDField";
-            this.custIDField.Size = new System.Drawing.Size(139, 20);
-            this.custIDField.TabIndex = 39;
-            // 
-            // custIDLabel
-            // 
-            this.custIDLabel.AutoSize = true;
-            this.custIDLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.custIDLabel.Location = new System.Drawing.Point(672, 577);
-            this.custIDLabel.Name = "custIDLabel";
-            this.custIDLabel.Size = new System.Drawing.Size(21, 16);
-            this.custIDLabel.TabIndex = 38;
-            this.custIDLabel.Text = "ID";
             // 
             // custNameLabel
             // 
@@ -206,6 +186,8 @@ namespace AndrewHowardSchedulerApp
             this.custDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.custDataGrid.Location = new System.Drawing.Point(24, 29);
             this.custDataGrid.Name = "custDataGrid";
+            this.custDataGrid.ReadOnly = true;
+            this.custDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.custDataGrid.Size = new System.Drawing.Size(930, 523);
             this.custDataGrid.TabIndex = 40;
             // 
@@ -285,8 +267,6 @@ namespace AndrewHowardSchedulerApp
             this.Controls.Add(this.reportsButton);
             this.Controls.Add(this.custDataGrid);
             this.Controls.Add(this.custCountryComboBox);
-            this.Controls.Add(this.custIDField);
-            this.Controls.Add(this.custIDLabel);
             this.Controls.Add(this.custNameLabel);
             this.Controls.Add(this.custNameField);
             this.Controls.Add(this.custCityComboBox);
@@ -316,7 +296,6 @@ namespace AndrewHowardSchedulerApp
         public System.Windows.Forms.Button custAddButton;
         public System.Windows.Forms.Button custEditButton;
         public System.Windows.Forms.Label custNameLabel;
-        public System.Windows.Forms.Label custIDLabel;
         public System.Windows.Forms.Label custAddressLabel;
         public System.Windows.Forms.Label custAddressLabelTwo;
         public System.Windows.Forms.Label custCountryLabel;
@@ -324,7 +303,6 @@ namespace AndrewHowardSchedulerApp
         public System.Windows.Forms.Label custCityLabel;
         public System.Windows.Forms.Label custPhoneLabel;
         public System.Windows.Forms.TextBox custNameField;
-        public System.Windows.Forms.TextBox custIDField;
         public System.Windows.Forms.TextBox custAddressField;
         public System.Windows.Forms.ComboBox custCountryComboBox;
         public System.Windows.Forms.ComboBox custCityComboBox;

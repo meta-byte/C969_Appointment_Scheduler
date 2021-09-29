@@ -59,8 +59,11 @@ namespace AndrewHowardSchedulerApp
             this.apptDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.apptDataGrid.Location = new System.Drawing.Point(39, 67);
             this.apptDataGrid.Name = "apptDataGrid";
+            this.apptDataGrid.ReadOnly = true;
+            this.apptDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.apptDataGrid.Size = new System.Drawing.Size(910, 549);
             this.apptDataGrid.TabIndex = 4;
+            this.apptDataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.apptDataGrid_CellClick);
             // 
             // apptMonthViewRadio
             // 
@@ -196,6 +199,7 @@ namespace AndrewHowardSchedulerApp
             this.apptEditButton.TabIndex = 51;
             this.apptEditButton.Text = "Edit";
             this.apptEditButton.UseVisualStyleBackColor = true;
+            this.apptEditButton.Click += new System.EventHandler(this.apptEditButton_Click);
             // 
             // apptAddButton
             // 
@@ -206,6 +210,7 @@ namespace AndrewHowardSchedulerApp
             this.apptAddButton.TabIndex = 52;
             this.apptAddButton.Text = "Add";
             this.apptAddButton.UseVisualStyleBackColor = true;
+            this.apptAddButton.Click += new System.EventHandler(this.apptAddButton_Click);
             // 
             // apptDeleteButton
             // 
@@ -216,6 +221,7 @@ namespace AndrewHowardSchedulerApp
             this.apptDeleteButton.TabIndex = 53;
             this.apptDeleteButton.Text = "Delete";
             this.apptDeleteButton.UseVisualStyleBackColor = true;
+            this.apptDeleteButton.Click += new System.EventHandler(this.apptDeleteButton_Click);
             // 
             // reportsButton
             // 

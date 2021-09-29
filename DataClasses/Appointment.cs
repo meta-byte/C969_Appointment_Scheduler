@@ -44,6 +44,10 @@ namespace AndrewHowardSchedulerApp.DataClasses
         public string LastUpdateBy;
 
 
+        public Appointment() {
+
+        }
+
         public Appointment(int appointmentID, int customerID, int userID, string title, string description, string location, string contact, string type, string url, DateTime start, DateTime end, DateTime createDate, string createdBy, DateTime lastUpdate, string lastUpdateBy)
         {
             AppointmentID = appointmentID;
