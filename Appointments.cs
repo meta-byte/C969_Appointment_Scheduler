@@ -41,7 +41,7 @@ namespace AndrewHowardSchedulerApp
 
 
             //Combo Boxes Pickers and Text Boxes
-            apptTypeComboBox.DataSource = new[]{ "Scrum", "Presentation", "Interview", "Coffee", "Consulation" };
+            apptTypeComboBox.DataSource = new[]{ "Scrum", "Presentation", "Interview", "Coffee", "Consulation", "Office Party" };
             var customerTable = DataOperations.GetCustomers();
             var customerList = (from DataRow row in customerTable.Rows select row["Name"]).ToList();
             apptCustomerComboBox.DataSource = customerList;

@@ -681,19 +681,18 @@ namespace AndrewHowardSchedulerApp.DB
 
                 var selectApptTypes = "select type from appointment where userId = '" + userId + "' and month(start) = '" + month + "';";
                 MySqlCommand command = new MySqlCommand(selectApptTypes, connection);
-                command.ExecuteNonQuery();
+                MySqlDataReader reader = command.ExecuteReader();
 
-                using (MySqlDataReader reader = command.ExecuteReader())
+
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        apptTypesList.Add(reader["type"].ToString());
-                    }
+                    apptTypesList.Add(reader["type"].ToString());
                 }
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception thrown when returning appt types by month: " + ex);
+                Console.WriteLine("error getting appointments " + ex);
             }
 
             Disconnect();
@@ -725,13 +724,44 @@ namespace AndrewHowardSchedulerApp.DB
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception thrown when returning appt types by month: " + ex);
+                Console.WriteLine("Error getting user appointments " + ex);
             }
 
             Disconnect();
             return appointments;
         }
+
+        public static List<string> GetApptCountsCustomer()
+        {
+            List<string> custApptList = new List<string>();
+
+            try
+            {
+                Connect();
+
+                var selectCustAppts = "select customer.customerName as customer , count(appointment.appointmentId) as count from appointment join customer on appointment.customerId = customer.customerId group by customer.customerName;";
+                MySqlCommand command = new MySqlCommand(selectCustAppts, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+
+                while (reader.Read())
+                {
+                    string customer = reader["customer"].ToString() + ": " + reader["count"].ToString();
+                    custApptList.Add(customer);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(" error getting appt count " + ex);
+            }
+
+            Disconnect();
+            return custApptList;
+        }
+
     }
+
 }
 
 

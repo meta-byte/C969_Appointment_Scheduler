@@ -61,14 +61,14 @@ namespace AndrewHowardSchedulerApp
                 List<string> list = DataOperations.GetApptsByMonth(User.UserID, i);
                 report.AppendLine(Environment.NewLine + DateTimeFormatInfo.CurrentInfo.GetMonthName(i));
                 var query = from type in list
-                        group type by type into g
-                        let count = g.Count()
-                        orderby count descending
-                        select new { Value = g.Key, Count = count };
+                            group type by type into g
+                            let count = g.Count()
+                            orderby count descending
+                            select new { Value = g.Key, Count = count };
 
                 foreach (var type in query)
                 {
-                    report.AppendLine("     " + type.Value + ": "+ type.Count);
+                    report.AppendLine("     " + type.Value + ": " + type.Count);
                 }
             }
 
@@ -83,12 +83,6 @@ namespace AndrewHowardSchedulerApp
             int userId = int.Parse(DataOperations.GetUserId(user));
             List<Appointment> appts = DataOperations.GetUserAppts(userId);
 
-            
-            //var query = from appt in appts
-            //            group appt by appt into g
-            //            let count = g.Count()
-            //            orderby count descending
-            //            select new { Value = g.Key, Count = count };
 
             foreach (var appt in appts)
             {
@@ -98,9 +92,21 @@ namespace AndrewHowardSchedulerApp
             rptTextBox.Text = report.ToString();
         }
 
-        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        private void rptApptsByCustomer_CheckedChanged(object sender, EventArgs e)
         {
+            rptTextBox.Text = string.Empty;
+            var report = new StringBuilder();
+            {
+                List<string> apptCountList = DataOperations.GetApptCountsCustomer();
 
+                foreach (var customer in apptCountList)
+                {
+                    report.AppendLine(customer + Environment.NewLine);
+                }
+
+
+                rptTextBox.Text = report.ToString();
+            }
         }
     }
 }
