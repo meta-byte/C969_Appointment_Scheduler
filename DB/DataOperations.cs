@@ -17,7 +17,7 @@ namespace AndrewHowardSchedulerApp.DB
         private const string database = "client_schedule";
         private const string username = "sqlUser";
         private const string password = "passw0rd!";
-        private const string connectionString = "SERVER=" + server + ";" + "DATABASE=" + database + ";" + "Uid=" + username+ ";" + "password =" + password + ";" + "SslMode=None";
+        private const string connectionString = "SERVER=" + server + ";" + "DATABASE=" + database + ";" + "Uid=" + username + ";" + "password =" + password + ";" + "SslMode=None";
         private static MySqlConnection connection = new MySqlConnection(connectionString);
 
         //public
@@ -25,7 +25,7 @@ namespace AndrewHowardSchedulerApp.DB
         //Remember to try and catch here
         public static void Connect()
         {
-            if(connection.State != System.Data.ConnectionState.Open)
+            if (connection.State != System.Data.ConnectionState.Open)
             {
                 connection.Open();
             }
@@ -34,7 +34,7 @@ namespace AndrewHowardSchedulerApp.DB
 
         public static void Disconnect()
         {
-            if(connection.State != System.Data.ConnectionState.Closed)
+            if (connection.State != System.Data.ConnectionState.Closed)
             {
                 connection.Close();
             }
@@ -43,7 +43,7 @@ namespace AndrewHowardSchedulerApp.DB
 
         public static void Login(string username, string password)
         {
-            
+
             try
             {
 
@@ -160,7 +160,7 @@ namespace AndrewHowardSchedulerApp.DB
                 MySqlCommand command = new MySqlCommand(insertAppointment, connection);
                 Console.WriteLine(command.CommandText);
                 command.ExecuteNonQuery();
-                
+
 
             }
             catch (Exception ex)
@@ -232,7 +232,7 @@ namespace AndrewHowardSchedulerApp.DB
             try
             {
                 Connect();
-                var selectCustomer = "select customerId from customer where customerName = '"+ name +"';";
+                var selectCustomer = "select customerId from customer where customerName = '" + name + "';";
 
                 MySqlCommand command = new MySqlCommand(selectCustomer, connection);
                 MySqlDataReader reader = command.ExecuteReader();
@@ -323,6 +323,32 @@ namespace AndrewHowardSchedulerApp.DB
             Disconnect();
         }
 
+        public static void EditCustomer(Customer customer)
+        {
+            int customerId = customer.CustomerID;
+            string customerName = customer.CustomerName;
+            int addressId = customer.AddressID;
+            string lastUpdate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string lastUpdateBy = User.Username;
+
+            try
+            {
+                Connect();
+                var updateCustomer = "update customer set customerName = '" + customerName + "', addressId = '" + addressId + "', lastUpdate = '" + lastUpdate + "', lastUpdateBy = '" + lastUpdateBy + "' where customerId = '" + customerId + "';";
+                MySqlCommand command = new MySqlCommand(updateCustomer, connection);
+                Console.WriteLine(command.CommandText);
+                command.ExecuteNonQuery();
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error updating customer: " + ex);
+
+            }
+            Disconnect();
+        }
+
         public static void DeleteCustomer(int customerId)
         {
 
@@ -370,45 +396,9 @@ namespace AndrewHowardSchedulerApp.DB
             Disconnect();
         }
 
-        public static DataTable GetCountries()
-        {
-            DataTable countriesTable = new DataTable();
-
-            //Add columns to datatable
-            if (!countriesTable.Columns.Contains("ID")) { countriesTable.Columns.Add("ID", typeof(string)); }
-            if (!countriesTable.Columns.Contains("Country")) { countriesTable.Columns.Add("Country", typeof(string)); }
-
-
-            try
-            {
-
-                Connect();
-                var selectCountries = "select * from country";
-                MySqlCommand command = new MySqlCommand(selectCountries, connection);
-                MySqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        countriesTable.Rows.Add(reader["countryId"], reader["country"]);
-                    }
-                }
-
-            }
-
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error getting countries: " + ex);
-            }
-
-            Disconnect();
-            return countriesTable;
-        }
-
         public static string GetCountry(string countryName)
         {
-            string countryID = null;
+            string countryID = "0";
 
             try
             {
@@ -447,7 +437,7 @@ namespace AndrewHowardSchedulerApp.DB
             try
             {
                 Connect();
-                var insertCity = "insert into city(country, createDate, createdBy, lastUpdate, lastUpdateBy) values('" + cityName + "', '" + countryId + "', '" + createDate + "', '" + createdBy + "', '" + lastUpdate + "', '" + lastUpdateBy + "' );";
+                var insertCity = "insert into city(city, countryId, createDate,  createdBy, lastUpdate, lastUpdateBy) values('" + cityName + "', '" + countryId + "', '" + createDate + "', '" + createdBy + "', '" + lastUpdate + "', '" + lastUpdateBy + "' );";
                 MySqlCommand command = new MySqlCommand(insertCity, connection);
                 Console.WriteLine(command.CommandText);
                 command.ExecuteNonQuery();
@@ -462,46 +452,9 @@ namespace AndrewHowardSchedulerApp.DB
             Disconnect();
         }
 
-        public static DataTable GetCities(int countryId)
-        {
-            DataTable citiesTable = new DataTable();
-
-            //Add columns to datatable
-            if (!citiesTable.Columns.Contains("ID")) { citiesTable.Columns.Add("ID", typeof(string)); }
-            if (!citiesTable.Columns.Contains("City")) { citiesTable.Columns.Add("City", typeof(string)); }
-            if (!citiesTable.Columns.Contains("CountryId")) { citiesTable.Columns.Add("CountryId", typeof(string)); }
-
-
-            try
-            {
-
-                Connect();
-                var selectCities = "select * from city where countryId = '" + countryId + "';" ;
-                MySqlCommand command = new MySqlCommand(selectCities, connection);
-                MySqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        citiesTable.Rows.Add(reader["cityId"], reader["city"], reader["countryId"]);
-                    }
-                }
-
-            }
-
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error getting cities: " + ex);
-            }
-
-            Disconnect();
-            return citiesTable;
-        }
-
         public static string GetCity(string city)
         {
-            string cityId = null;
+            string cityId = "0";
 
             try
             {
@@ -558,9 +511,38 @@ namespace AndrewHowardSchedulerApp.DB
             Disconnect();
         }
 
+        public static void EditAddress(Address address)
+        {
+            int addressId = address.AddressID;
+            string address1 = address.Address1;
+            string address2 = address.Address2;
+            int cityId = address.CityID;
+            string postalCode = address.PostalCode;
+            string phone = address.Phone;
+            string lastUpdate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string lastUpdateBy = User.Username;
+
+            try
+            {
+                Connect();
+                var updateAddress = "update address set address = '" + address1 + "', address2 = '" + address2 + "', cityId = '" + cityId + "', postalCode = '" + postalCode + "', phone = '" + phone + "', lastUpdate = '" + lastUpdate + "', lastUpdateBy = '" + lastUpdateBy + "' where addressId = '" + addressId + "';";
+                MySqlCommand command = new MySqlCommand(updateAddress, connection);
+                Console.WriteLine(command.CommandText);
+                command.ExecuteNonQuery();
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error updating address: " + ex);
+
+            }
+            Disconnect();
+        }
+
         public static string GetAddress(string address)
         {
-            string addressId = null;
+            string addressId = "0";
 
             try
             {
@@ -587,7 +569,170 @@ namespace AndrewHowardSchedulerApp.DB
             return addressId;
         }
 
-    }
+        public static DataTable GetUsers()
+        {
+            DataTable usersTable = new DataTable();
 
+            //Add columns to datatable
+            if (!usersTable.Columns.Contains("ID")) { usersTable.Columns.Add("ID", typeof(string)); }
+            if (!usersTable.Columns.Contains("UserName")) { usersTable.Columns.Add("UserName", typeof(string)); }
+
+
+            try
+            {
+
+                Connect();
+                var selectUsers = "select * from user;";
+                MySqlCommand command = new MySqlCommand(selectUsers, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        usersTable.Rows.Add(reader["userId"], reader["userName"]);
+                    }
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting users: " + ex);
+            }
+
+            Disconnect();
+            return usersTable;
+        }
+
+        public static string GetUserId(string userName)
+        {
+            string userId = "0";
+
+            try
+            {
+                Connect();
+                var selectUser = "select userId from user where userName = '" + userName + "';";
+
+                MySqlCommand command = new MySqlCommand(selectUser, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        userId = reader["userId"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting userId: " + ex);
+
+            }
+
+            Disconnect();
+            return userId;
+        }
+
+        public static void LogActivity(string username, string text)
+        {
+            DirectoryInfo info = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+            string path = info + "\\log.txt";
+            Console.WriteLine(path);
+
+            string log = username + " : " + text + " : " + DateTime.Now.ToString();
+            try
+            {
+
+                if (!File.Exists(path))
+                {
+                    using (StreamWriter writer = File.CreateText(path))
+                    {
+                        writer.WriteLine(log);
+                        writer.Close();
+
+                    }
+                }
+                else
+                {
+                    using (StreamWriter writer = File.AppendText(path))
+                    {
+                        writer.WriteLine(log);
+                        writer.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error writing log: " + ex);
+
+            }
+            Disconnect();
+
+        }
+
+        public static List<string> GetApptsByMonth(int userId, int month)
+        {
+            List<string> apptTypesList = new List<string>();
+
+            try
+            {
+                Connect();
+
+                var selectApptTypes = "select type from appointment where userId = '" + userId + "' and month(start) = '" + month + "';";
+                MySqlCommand command = new MySqlCommand(selectApptTypes, connection);
+                command.ExecuteNonQuery();
+
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        apptTypesList.Add(reader["type"].ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception thrown when returning appt types by month: " + ex);
+            }
+
+            Disconnect();
+            return apptTypesList;
+        }
+
+        public static List<Appointment> GetUserAppts(int userId)
+        {
+            List<Appointment> appointments = new List<Appointment>();
+
+            try
+            {
+                Connect();
+
+                var selectApptTypes = "select title, start, end from appointment where userId = '" + userId + "';";
+                MySqlCommand command = new MySqlCommand(selectApptTypes, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    appointments.Add(new Appointment()
+                    {
+                        Title = reader["title"].ToString(),
+                        Start = (DateTime)reader["start"],
+                        End = (DateTime)reader["end"]
+                    });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception thrown when returning appt types by month: " + ex);
+            }
+
+            Disconnect();
+            return appointments;
+        }
+    }
 }
+
+
 

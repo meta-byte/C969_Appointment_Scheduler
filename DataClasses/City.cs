@@ -26,6 +26,11 @@ namespace AndrewHowardSchedulerApp
         public DateTime LastUpdate { get; set; }
         public string LastUpdateBy { get; set; }
 
+        public City()
+        {
+
+        }
+
         public City(int cityID, string cityName, int countryID, DateTime createDate, string createdBy, DateTime lastUpdate, string lastUpdateBy)
         {
             CityID = cityID;

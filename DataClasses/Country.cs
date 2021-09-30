@@ -24,6 +24,11 @@ namespace AndrewHowardSchedulerApp.DataClasses
         public DateTime LastUpdate { get; set; }
         public string LastUpdateBy { get; set; }
 
+        public Country()
+        {
+
+        }
+
         public Country(int countryID, string country, DateTime createDate, string createdBy, DateTime lastUpdate, string lastUpdateBy)
         {
             CountryID = countryID;

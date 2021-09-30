@@ -35,9 +35,6 @@ namespace AndrewHowardSchedulerApp
             custDataGrid.DataSource = null;
             custDataGrid.DataSource = customerSource;
 
-            var countriesTable = DataOperations.GetCountries();
-            var countriesList = (from DataRow row in countriesTable.Rows select row["Country"]).ToList();
-            custCountryComboBox.DataSource = countriesList;
 
         }
         private void dgv_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
@@ -70,54 +67,135 @@ namespace AndrewHowardSchedulerApp
 
         private void custAddButton_Click(object sender, EventArgs e)
         {
-            string selectedCity = custCityComboBox.SelectedItem.ToString();
-            int cityId = int.Parse(DataOperations.GetCity(selectedCity));
+            //Find or add country
+            string countryName = custCountryField.Text.ToString();
+            Country country = new Country();
+            country.CountryName = countryName;
+            int countryId = int.Parse(DataOperations.GetCountry(countryName));
+            if (countryId == 0)
+            {
+                DataOperations.AddCountry(country);
 
+            }
+
+            //Find or add city
+            string cityName = custCityField.Text.ToString();
+            City city = new City();
+            countryId = int.Parse(DataOperations.GetCountry(countryName));
+            city.CityName = cityName;
+            city.CountryID = countryId;
+            int cityId = int.Parse(DataOperations.GetCity(cityName));
+            if (cityId == 0)
+            {
+                DataOperations.AddCity(city);
+            }
+
+
+            //Find or add address
             Address address = new Address();
-
+            cityId = int.Parse(DataOperations.GetCity(cityName));
+            string customerAddress = custAddressField.Text.ToString();
             address.Address1 = custAddressField.Text;
             address.Address2 = custAddressFieldTwo.Text;
             address.PostalCode = custZipField.Text;
             address.Phone = custPhoneField.Text;
             address.CityID = cityId;
+            int addressId = int.Parse(DataOperations.GetAddress(customerAddress));
+            if (addressId == 0)
+            {
+                DataOperations.AddAddress(address);
+            }
 
-            DataOperations.AddAddress(address);
-            int addressId = int.Parse(DataOperations.GetAddress(address.Address1));
-
+            //Add the customer
+            addressId = int.Parse(DataOperations.GetAddress(customerAddress));
             Customer customer = new Customer();
-
             customer.CustomerName = custNameField.Text;
             customer.AddressID = addressId;
-            customer.Active = 1;
-
-
             DataOperations.AddCustomer(customer);
+
+            DataOperations.LogActivity(User.Username, "Added customer " + customer.CustomerName);
+
 
             LoadCustomers();
         }
 
         private void custEditButton_Click(object sender, EventArgs e)
         {
+            //Find or add country
+            string countryName = custCountryField.Text.ToString();
+            Country country = new Country();
+            country.CountryName = countryName;
+            int countryId = int.Parse(DataOperations.GetCountry(countryName));
+            if (countryId == 0)
+            {
+                DataOperations.AddCountry(country);
+
+            }
+
+            //Find or add city
+            string cityName = custCityField.Text.ToString();
+            City city = new City();
+            countryId = int.Parse(DataOperations.GetCountry(countryName));
+            city.CityName = cityName;
+            city.CountryID = countryId;
+            int cityId = int.Parse(DataOperations.GetCity(cityName));
+            if (cityId == 0)
+            {
+                DataOperations.AddCity(city);
+            }
+
+            //Find or add address
+            Address address = new Address();
+            cityId = int.Parse(DataOperations.GetCity(cityName));
+            string customerAddress = custAddressField.Text.ToString();
+            address.Address1 = custAddressField.Text;
+            address.Address2 = custAddressFieldTwo.Text;
+            address.PostalCode = custZipField.Text;
+            address.Phone = custPhoneField.Text;
+            address.CityID = cityId;
+            int addressId = int.Parse(DataOperations.GetAddress(customerAddress));
+            if (addressId == 0)
+            {
+                DataOperations.AddAddress(address);
+            }
+
+
+            //Edit the customer
+            var customerId = custDataGrid.CurrentRow.Cells[0].Value;
+            addressId = int.Parse(DataOperations.GetAddress(customerAddress));
+            Customer customer = new Customer();
+            customer.CustomerID = int.Parse((string)customerId);
+            customer.CustomerName = custNameField.Text;
+            customer.AddressID = addressId;
+            DataOperations.EditCustomer(customer);
+
+            DataOperations.LogActivity(User.Username, "Edited customer " + customer.CustomerName);
+
+
+            LoadCustomers();
 
         }
 
         private void custDeleteButton_Click(object sender, EventArgs e)
         {
-            string customerName = custDataGrid.CurrentRow.Cells[1].Value.ToString();
-            int.TryParse(DataOperations.GetCustomer(customerName), out int customerID);
+            int customerID = int.Parse(custDataGrid.CurrentRow.Cells[0].Value.ToString());
 
             DataOperations.DeleteCustomer(customerID);
+            DataOperations.LogActivity(User.Username, "Deleted customer with ID " + customerID);
 
+            LoadCustomers();
         }
 
-        private void custCountryBox_SelectionChanged(object sender, EventArgs e)
+        private void custDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            string selectedCountry = custCountryComboBox.SelectedItem.ToString();
-            int countryId = int.Parse(DataOperations.GetCountry(selectedCountry));
+            custNameField.Text = custDataGrid.CurrentRow.Cells[1].Value.ToString();
+            custAddressField.Text = custDataGrid.CurrentRow.Cells[2].Value.ToString();
+            custAddressFieldTwo.Text = custDataGrid.CurrentRow.Cells[3].Value.ToString();
+            custCityField.Text = custDataGrid.CurrentRow.Cells[4].Value.ToString();
+            custZipField.Text = custDataGrid.CurrentRow.Cells[5].Value.ToString();
+            custCountryField.Text = custDataGrid.CurrentRow.Cells[6].Value.ToString();
+            custPhoneField.Text = custDataGrid.CurrentRow.Cells[7].Value.ToString();
 
-            var citiesTable = DataOperations.GetCities(countryId);
-            var citiesList = (from DataRow row in citiesTable.Rows select row["City"]).ToList();
-            custCityComboBox.DataSource = citiesList;
         }
 
     }

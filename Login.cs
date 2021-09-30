@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using AndrewHowardSchedulerApp.DataClasses;
+using AndrewHowardSchedulerApp.DB;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
@@ -68,7 +69,7 @@ namespace AndrewHowardSchedulerApp
         {
             string username = loginUserField.Text;
             string password = loginPasswordField.Text;
-            DB.DataOperations.Login(username, password);
+            DataOperations.Login(username, password);
 
             var currentUser = User.UserID;
 
@@ -77,6 +78,7 @@ namespace AndrewHowardSchedulerApp
 
                 this.Hide();
                 Appointments Appointments = new Appointments(currentUser);
+                DataOperations.LogActivity(User.Username, "logged in");
                 Appointments.ShowDialog();
                 this.Close();
             }

@@ -109,6 +109,7 @@ namespace AndrewHowardSchedulerApp
             appointment.End = apptEndPicker.Value;
 
             DataOperations.AddAppointment(appointment);
+            DataOperations.LogActivity(User.Username, "Added an appointment with ID " + appointment.AppointmentID);
             LoadAppointments(User.UserID);
         }
 
@@ -130,6 +131,8 @@ namespace AndrewHowardSchedulerApp
             appointment.End = apptEndPicker.Value;
 
             DataOperations.EditAppointment(appointment);
+            DataOperations.LogActivity(User.Username, "Edited an appointment with ID " + selectedAppointmentId);
+
             LoadAppointments(User.UserID);
         }
 
@@ -137,6 +140,7 @@ namespace AndrewHowardSchedulerApp
         {
             int selectedAppointmentId = int.Parse(apptDataGrid.CurrentRow.Cells[0].Value.ToString());
             DataOperations.DeleteAppointment(selectedAppointmentId);
+            DataOperations.LogActivity(User.Username, "Deleted an appointment with ID " + selectedAppointmentId);
 
             LoadAppointments(User.UserID);
         }

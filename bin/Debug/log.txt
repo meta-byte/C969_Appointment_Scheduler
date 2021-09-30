@@ -1,0 +1,34 @@
+test : logged in : 9/30/2021 12:23:02 PM
+test : logged in : 9/30/2021 12:26:13 PM
+test : logged in : 9/30/2021 12:29:47 PM
+test : logged in : 9/30/2021 12:31:16 PM
+test : logged in : 9/30/2021 12:38:01 PM
+test : Edited customerIna Prufung : 9/30/2021 12:38:09 PM
+test : logged in : 9/30/2021 12:41:02 PM
+test : Edited an appointment with ID 5 : 9/30/2021 12:41:09 PM
+test : logged in : 9/30/2021 1:18:52 PM
+test : logged in : 9/30/2021 1:24:17 PM
+test : logged in : 9/30/2021 1:36:06 PM
+test : logged in : 9/30/2021 1:38:51 PM
+test : logged in : 9/30/2021 1:46:38 PM
+test : logged in : 9/30/2021 1:47:12 PM
+test : Added an appointment with ID 0 : 9/30/2021 1:47:50 PM
+test : logged in : 9/30/2021 1:50:06 PM
+test : logged in : 9/30/2021 1:50:22 PM
+test : Added an appointment with ID 0 : 9/30/2021 1:50:52 PM
+test : logged in : 9/30/2021 1:55:48 PM
+test : logged in : 9/30/2021 1:56:14 PM
+test : logged in : 9/30/2021 1:56:57 PM
+test : logged in : 9/30/2021 1:57:16 PM
+test : logged in : 9/30/2021 1:57:37 PM
+test : logged in : 9/30/2021 2:23:35 PM
+test : logged in : 9/30/2021 2:25:40 PM
+test : logged in : 9/30/2021 2:36:18 PM
+test : logged in : 9/30/2021 2:36:41 PM
+test : logged in : 9/30/2021 2:37:23 PM
+test : logged in : 9/30/2021 2:37:53 PM
+test : logged in : 9/30/2021 2:58:00 PM
+test : logged in : 9/30/2021 2:59:01 PM
+test : logged in : 9/30/2021 2:59:35 PM
+test : logged in : 9/30/2021 3:00:13 PM
+test : logged in : 9/30/2021 3:00:57 PM

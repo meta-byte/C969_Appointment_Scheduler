@@ -36,6 +36,7 @@ namespace AndrewHowardSchedulerApp
             this.exitButton = new System.Windows.Forms.Button();
             this.appointmentsButton = new System.Windows.Forms.Button();
             this.customersButton = new System.Windows.Forms.Button();
+            this.rptUserComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // rptTextBox
@@ -57,30 +58,33 @@ namespace AndrewHowardSchedulerApp
             this.rptAppointmentTypesRadio.TabStop = true;
             this.rptAppointmentTypesRadio.Text = "Appointment Types / Month";
             this.rptAppointmentTypesRadio.UseVisualStyleBackColor = true;
+            this.rptAppointmentTypesRadio.CheckedChanged += new System.EventHandler(this.rptAppointmentTypesRadio_CheckedChanged);
             // 
             // rptConsultantScheduleRadio
             // 
             this.rptConsultantScheduleRadio.AutoSize = true;
             this.rptConsultantScheduleRadio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.rptConsultantScheduleRadio.Location = new System.Drawing.Point(526, 98);
+            this.rptConsultantScheduleRadio.Location = new System.Drawing.Point(216, 72);
             this.rptConsultantScheduleRadio.Name = "rptConsultantScheduleRadio";
             this.rptConsultantScheduleRadio.Size = new System.Drawing.Size(166, 20);
             this.rptConsultantScheduleRadio.TabIndex = 2;
             this.rptConsultantScheduleRadio.TabStop = true;
             this.rptConsultantScheduleRadio.Text = "Schedule by Consultant";
             this.rptConsultantScheduleRadio.UseVisualStyleBackColor = true;
+            this.rptConsultantScheduleRadio.CheckedChanged += new System.EventHandler(this.rptConsultantScheduleRadio_CheckedChanged);
             // 
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
             this.radioButton3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.radioButton3.Location = new System.Drawing.Point(855, 98);
+            this.radioButton3.Location = new System.Drawing.Point(216, 46);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(101, 20);
             this.radioButton3.TabIndex = 4;
             this.radioButton3.TabStop = true;
             this.radioButton3.Text = "radioButton3";
             this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
             // 
             // exitButton
             // 
@@ -115,11 +119,20 @@ namespace AndrewHowardSchedulerApp
             this.customersButton.UseVisualStyleBackColor = true;
             this.customersButton.Click += new System.EventHandler(this.customersButton_Click);
             // 
+            // rptUserComboBox
+            // 
+            this.rptUserComboBox.FormattingEnabled = true;
+            this.rptUserComboBox.Location = new System.Drawing.Point(407, 71);
+            this.rptUserComboBox.Name = "rptUserComboBox";
+            this.rptUserComboBox.Size = new System.Drawing.Size(113, 21);
+            this.rptUserComboBox.TabIndex = 61;
+            // 
             // Reports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 861);
+            this.Controls.Add(this.rptUserComboBox);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.appointmentsButton);
             this.Controls.Add(this.customersButton);
@@ -142,5 +155,6 @@ namespace AndrewHowardSchedulerApp
         public System.Windows.Forms.Button appointmentsButton;
         public System.Windows.Forms.Button customersButton;
         public System.Windows.Forms.TextBox rptTextBox;
+        public System.Windows.Forms.ComboBox rptUserComboBox;
     }
 }
