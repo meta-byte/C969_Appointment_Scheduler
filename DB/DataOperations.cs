@@ -98,7 +98,49 @@ namespace AndrewHowardSchedulerApp.DB
 
         }
 
-        public static DataTable GetAppointments(int userID)
+        public static DataTable GetAppointmentsMonth(int userID)
+        {
+            DataTable appoinmentsTable = new DataTable();
+            int month = DateTime.Now.Month;
+            int year = DateTime.Now.Year;
+
+            //Add columns to datatable
+            if (!appoinmentsTable.Columns.Contains("ID")) { appoinmentsTable.Columns.Add("ID", typeof(string)); }
+            if (!appoinmentsTable.Columns.Contains("Title")) { appoinmentsTable.Columns.Add("Title", typeof(string)); }
+            if (!appoinmentsTable.Columns.Contains("Customer")) { appoinmentsTable.Columns.Add("Customer", typeof(string)); }
+            if (!appoinmentsTable.Columns.Contains("Type")) { appoinmentsTable.Columns.Add("Type", typeof(string)); }
+            if (!appoinmentsTable.Columns.Contains("Start")) { appoinmentsTable.Columns.Add("Start", typeof(string)); }
+            if (!appoinmentsTable.Columns.Contains("End")) { appoinmentsTable.Columns.Add("End", typeof(string)); }
+
+            try
+            {
+
+                Connect();
+                var selectAppointment = "select appointment.appointmentId, appointment.title, customer.customerName, appointment.type, appointment.start, appointment.end from appointment join customer on appointment.customerId = customer.customerId where userId = '" + userID + "' and month(start) = " + month + " and year(start) = " + year + ";";
+                MySqlCommand command = new MySqlCommand(selectAppointment, connection);
+                Console.WriteLine(command.CommandText);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        appoinmentsTable.Rows.Add(reader["appointmentId"], reader["title"], reader["customerName"], reader["type"], Convert.ToDateTime(reader["start"]).ToLocalTime(), Convert.ToDateTime(reader["end"]).ToLocalTime());
+                    }
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting appointments: " + ex);
+            }
+
+            Disconnect();
+            return appoinmentsTable;
+        }
+
+        public static DataTable GetAppointmentsWeek(int userID)
         {
             DataTable appoinmentsTable = new DataTable();
 
@@ -114,15 +156,16 @@ namespace AndrewHowardSchedulerApp.DB
             {
 
                 Connect();
-                var selectAppointment = "select appointment.appointmentId, appointment.title, customer.customerName, appointment.type, appointment.start, appointment.end from appointment join customer on appointment.customerId = customer.customerId where userId = '" + userID + "';";
+                var selectAppointment = "select appointment.appointmentId, appointment.title, customer.customerName, appointment.type, appointment.start, appointment.end from appointment join customer on appointment.customerId = customer.customerId where userId = '" + userID + "' and yearweek(start) =  yearweek(current_date);";
                 MySqlCommand command = new MySqlCommand(selectAppointment, connection);
+                Console.WriteLine(command.CommandText);
                 MySqlDataReader reader = command.ExecuteReader();
 
                 if (reader.HasRows)
                 {
                     while (reader.Read())
                     {
-                        appoinmentsTable.Rows.Add(reader["appointmentId"], reader["title"], reader["customerName"], reader["type"], reader["start"], reader["end"]);
+                        appoinmentsTable.Rows.Add(reader["appointmentId"], reader["title"], reader["customerName"], reader["type"], Convert.ToDateTime(reader["start"]).ToLocalTime(), Convert.ToDateTime(reader["end"]).ToLocalTime());
                     }
                 }
 
@@ -137,6 +180,74 @@ namespace AndrewHowardSchedulerApp.DB
             return appoinmentsTable;
         }
 
+        public static DataTable GetAppointmentsDay(int userID)
+        {
+            DataTable appoinmentsTable = new DataTable();
+
+            //Add columns to datatable
+            if (!appoinmentsTable.Columns.Contains("ID")) { appoinmentsTable.Columns.Add("ID", typeof(string)); }
+            if (!appoinmentsTable.Columns.Contains("Title")) { appoinmentsTable.Columns.Add("Title", typeof(string)); }
+            if (!appoinmentsTable.Columns.Contains("Customer")) { appoinmentsTable.Columns.Add("Customer", typeof(string)); }
+            if (!appoinmentsTable.Columns.Contains("Type")) { appoinmentsTable.Columns.Add("Type", typeof(string)); }
+            if (!appoinmentsTable.Columns.Contains("Start")) { appoinmentsTable.Columns.Add("Start", typeof(string)); }
+            if (!appoinmentsTable.Columns.Contains("End")) { appoinmentsTable.Columns.Add("End", typeof(string)); }
+
+            try
+            {
+
+                Connect();
+                var selectAppointment = "select appointment.appointmentId, appointment.title, customer.customerName, appointment.type, appointment.start, appointment.end from appointment join customer on appointment.customerId = customer.customerId where userId = '" + userID + "' and date(start) = utc_date();";
+                MySqlCommand command = new MySqlCommand(selectAppointment, connection);
+                Console.WriteLine(command.CommandText);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        appoinmentsTable.Rows.Add(reader["appointmentId"], reader["title"], reader["customerName"], reader["type"], Convert.ToDateTime(reader["start"]).ToLocalTime() , Convert.ToDateTime(reader["end"]).ToLocalTime()); ;
+                    }
+                }
+
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting appointments: " + ex);
+            }
+
+            Disconnect();
+            return appoinmentsTable;
+        }
+
+        public static bool AppointmentsFifteenMinutes(int userID)
+        {
+
+            try
+            {
+
+                Connect();
+                var selectAppointment = "select appointment.appointmentId, appointment.title, customer.customerName, appointment.type, appointment.start, appointment.end from appointment join customer on appointment.customerId = customer.customerId where userId = '" + userID + "' and start between utc_timestamp() and (utc_timestamp() + interval 15 minute);";
+                MySqlCommand command = new MySqlCommand(selectAppointment, connection);
+                Console.WriteLine(command.CommandText);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    return true;
+                    Console.WriteLine("HERE");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting fifteen minute appointments: " + ex);
+            }
+
+            Disconnect();
+            return false;
+        }
+
         public static void AddAppointment(Appointment appointment)
         {
             int customerId = appointment.CustomerID;
@@ -149,7 +260,7 @@ namespace AndrewHowardSchedulerApp.DB
             string url = appointment.Url;
             string start = appointment.Start.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
             string end = appointment.End.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
-            string createDate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string createDate = DateTime.Now.ToLocalTime().ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
             string createdBy = User.Username;
             string lastUpdate = DateTime.Now.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
             string lastUpdateBy = User.Username;

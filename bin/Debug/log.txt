@@ -36,3 +36,99 @@ test : logged in : 9/30/2021 3:27:44 PM
 test : logged in : 9/30/2021 3:31:00 PM
 test : logged in : 9/30/2021 3:31:20 PM
 test : logged in : 9/30/2021 3:32:05 PM
+test : logged in : 9/30/2021 3:33:08 PM
+test : Deleted an appointment with ID 6 : 9/30/2021 3:33:19 PM
+test : Edited an appointment with ID 13 : 9/30/2021 3:33:26 PM
+test : Edited customer Irina Prufung : 9/30/2021 3:34:53 PM
+test : Edited customer Irina Prufung : 9/30/2021 3:35:07 PM
+test : Added customer Irina Prufung : 9/30/2021 3:35:26 PM
+test : Deleted customer with ID 13 : 9/30/2021 3:35:32 PM
+test : logged in : 9/30/2021 5:16:34 PM
+test : Deleted an appointment with ID 13 : 9/30/2021 5:16:45 PM
+test : logged in : 9/30/2021 5:25:35 PM
+test : Added customer  : 9/30/2021 5:25:44 PM
+test : Deleted customer with ID 14 : 9/30/2021 5:25:55 PM
+test : logged in : 9/30/2021 5:33:14 PM
+test : Added an appointment with ID 0 : 9/30/2021 5:33:16 PM
+test : Added an appointment with ID 0 : 9/30/2021 5:33:20 PM
+test : Deleted an appointment with ID 15 : 9/30/2021 5:33:24 PM
+test : Deleted an appointment with ID 14 : 9/30/2021 5:33:30 PM
+test : logged in : 9/30/2021 5:35:03 PM
+test : Added an appointment with ID 0 : 9/30/2021 5:35:17 PM
+test : Added customer test : 9/30/2021 5:35:44 PM
+test : Deleted customer with ID 15 : 9/30/2021 5:36:24 PM
+test : logged in : 9/30/2021 5:37:54 PM
+test : Added an appointment with ID 0 : 9/30/2021 5:37:59 PM
+test : Deleted an appointment with ID 17 : 9/30/2021 5:38:06 PM
+test : logged in : 9/30/2021 5:39:29 PM
+test : Added an appointment with ID 0 : 9/30/2021 5:39:33 PM
+test : Deleted an appointment with ID 18 : 9/30/2021 5:39:38 PM
+test : logged in : 9/30/2021 5:43:28 PM
+test : Added an appointment with ID 0 : 9/30/2021 5:43:35 PM
+test : logged in : 9/30/2021 5:46:32 PM
+test : Added an appointment with ID 0 : 9/30/2021 5:46:37 PM
+test : Deleted an appointment with ID 20 : 9/30/2021 5:46:42 PM
+test : Deleted an appointment with ID 19 : 9/30/2021 5:46:45 PM
+test : logged in : 9/30/2021 5:49:09 PM
+test : logged in : 9/30/2021 5:49:41 PM
+test : Added an appointment with ID 0 : 9/30/2021 5:49:46 PM
+test : Deleted an appointment with ID 21 : 9/30/2021 5:49:55 PM
+test : logged in : 9/30/2021 6:13:06 PM
+test : logged in : 9/30/2021 6:13:54 PM
+test : logged in : 9/30/2021 6:14:29 PM
+test : logged in : 9/30/2021 6:19:15 PM
+test : logged in : 9/30/2021 6:32:23 PM
+test : logged in : 9/30/2021 6:34:13 PM
+test : logged in : 9/30/2021 6:36:36 PM
+test : logged in : 9/30/2021 6:37:48 PM
+test : logged in : 9/30/2021 6:39:49 PM
+test : Added an appointment with ID 0 : 9/30/2021 6:39:57 PM
+test : logged in : 9/30/2021 6:54:36 PM
+test : Added an appointment with ID 0 : 9/30/2021 6:54:46 PM
+test : logged in : 9/30/2021 7:06:04 PM
+test : logged in : 9/30/2021 7:07:54 PM
+test : logged in : 9/30/2021 7:10:43 PM
+test : logged in : 9/30/2021 7:10:55 PM
+test : logged in : 9/30/2021 7:19:38 PM
+test : Added an appointment with ID 0 : 9/30/2021 7:19:56 PM
+test : Added an appointment with ID 0 : 9/30/2021 7:20:05 PM
+test : Added an appointment with ID 0 : 9/30/2021 7:20:07 PM
+test : Added an appointment with ID 0 : 9/30/2021 7:20:19 PM
+test : Added an appointment with ID 0 : 9/30/2021 7:20:27 PM
+test : logged in : 9/30/2021 7:21:18 PM
+test : Added an appointment with ID 0 : 9/30/2021 7:21:36 PM
+test : Deleted an appointment with ID 29 : 9/30/2021 7:21:45 PM
+test : Deleted an appointment with ID 28 : 9/30/2021 7:21:50 PM
+test : logged in : 9/30/2021 7:28:06 PM
+test : Deleted an appointment with ID 26 : 9/30/2021 7:28:11 PM
+test : Deleted an appointment with ID 27 : 9/30/2021 7:28:16 PM
+test : Deleted an appointment with ID 25 : 9/30/2021 7:28:20 PM
+test : logged in : 9/30/2021 7:30:47 PM
+test : Deleted an appointment with ID 24 : 9/30/2021 7:30:59 PM
+test : logged in : 9/30/2021 7:33:23 PM
+test : logged in : 9/30/2021 7:35:06 PM
+test : logged in : 9/30/2021 7:41:37 PM
+test : Edited an appointment with ID 22 : 9/30/2021 7:41:48 PM
+test : logged in : 9/30/2021 7:59:22 PM
+test : Added an appointment with ID 0 : 9/30/2021 8:00:07 PM
+test : logged in : 9/30/2021 8:00:45 PM
+test : logged in : 9/30/2021 8:07:51 PM
+test : Added an appointment with ID 0 : 9/30/2021 8:08:18 PM
+test : logged in : 9/30/2021 8:20:20 PM
+test : Added an appointment with ID 0 : 9/30/2021 8:21:06 PM
+test : logged in : 9/30/2021 8:28:17 PM
+test : logged in : 9/30/2021 8:29:19 PM
+test : logged in : 9/30/2021 8:30:06 PM
+test : logged in : 9/30/2021 8:31:54 PM
+test : logged in : 9/30/2021 8:32:51 PM
+test : logged in : 9/30/2021 8:35:40 PM
+test : logged in : 9/30/2021 8:52:36 PM
+test : Added an appointment with ID 0 : 9/30/2021 8:53:08 PM
+test : logged in : 9/30/2021 9:08:50 PM
+test : logged in : 9/30/2021 9:10:44 PM
+test : Added an appointment with ID 0 : 9/30/2021 9:11:04 PM
+test : Added an appointment with ID 0 : 9/30/2021 9:11:24 PM
+test : Deleted an appointment with ID 35 : 9/30/2021 9:11:30 PM
+test : logged in : 9/30/2021 9:15:04 PM
+test : logged in : 9/30/2021 9:16:31 PM
+test : logged in : 9/30/2021 9:16:55 PM

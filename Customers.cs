@@ -67,121 +67,195 @@ namespace AndrewHowardSchedulerApp
 
         private void custAddButton_Click(object sender, EventArgs e)
         {
-            //Find or add country
-            string countryName = custCountryField.Text.ToString();
-            Country country = new Country();
-            country.CountryName = countryName;
-            int countryId = int.Parse(DataOperations.GetCountry(countryName));
-            if (countryId == 0)
-            {
-                DataOperations.AddCountry(country);
+            // Validate that required fields have content
 
+            ToolTip toolTip = new ToolTip();
+
+            if (string.IsNullOrWhiteSpace(custNameField.Text))
+            {
+                toolTip.Show("Customer Name is required", custNameField);
+                return;
             }
 
-            //Find or add city
-            string cityName = custCityField.Text.ToString();
-            City city = new City();
-            countryId = int.Parse(DataOperations.GetCountry(countryName));
-            city.CityName = cityName;
-            city.CountryID = countryId;
-            int cityId = int.Parse(DataOperations.GetCity(cityName));
-            if (cityId == 0)
+            if (string.IsNullOrWhiteSpace(custAddressField.Text))
             {
-                DataOperations.AddCity(city);
+                toolTip.Show("Address is required", custAddressField);
+                return;
             }
 
-
-            //Find or add address
-            Address address = new Address();
-            cityId = int.Parse(DataOperations.GetCity(cityName));
-            string customerAddress = custAddressField.Text.ToString();
-            address.Address1 = custAddressField.Text;
-            address.Address2 = custAddressFieldTwo.Text;
-            address.PostalCode = custZipField.Text;
-            address.Phone = custPhoneField.Text;
-            address.CityID = cityId;
-            int addressId = int.Parse(DataOperations.GetAddress(customerAddress));
-            if (addressId == 0)
+            if (string.IsNullOrWhiteSpace(custCityField.Text))
             {
-                DataOperations.AddAddress(address);
+                toolTip.Show("City is required", custCityField);
+                return;
             }
 
-            //Add the customer
-            addressId = int.Parse(DataOperations.GetAddress(customerAddress));
-            Customer customer = new Customer();
-            customer.CustomerName = custNameField.Text;
-            customer.AddressID = addressId;
-            DataOperations.AddCustomer(customer);
+            if (string.IsNullOrWhiteSpace(custCountryField.Text))
+            {
+                toolTip.Show("Country is required", custCountryField);
+                return;
+            }
 
-            DataOperations.LogActivity(User.Username, "Added customer " + customer.CustomerName);
+            else
+            {
+                //Find or add country
+                string countryName = custCountryField.Text.ToString();
+                Country country = new Country();
+                country.CountryName = countryName;
+                int countryId = int.Parse(DataOperations.GetCountry(countryName));
+                if (countryId == 0)
+                {
+                    DataOperations.AddCountry(country);
+
+                }
+
+                //Find or add city
+                string cityName = custCityField.Text.ToString();
+                City city = new City();
+                countryId = int.Parse(DataOperations.GetCountry(countryName));
+                city.CityName = cityName;
+                city.CountryID = countryId;
+                int cityId = int.Parse(DataOperations.GetCity(cityName));
+                if (cityId == 0)
+                {
+                    DataOperations.AddCity(city);
+                }
 
 
-            LoadCustomers();
+                //Find or add address
+                Address address = new Address();
+                cityId = int.Parse(DataOperations.GetCity(cityName));
+                string customerAddress = custAddressField.Text.ToString();
+                address.Address1 = custAddressField.Text;
+                address.Address2 = custAddressFieldTwo.Text;
+                address.PostalCode = custZipField.Text;
+                address.Phone = custPhoneField.Text;
+                address.CityID = cityId;
+                int addressId = int.Parse(DataOperations.GetAddress(customerAddress));
+                if (addressId == 0)
+                {
+                    DataOperations.AddAddress(address);
+                }
+
+                //Add the customer
+                addressId = int.Parse(DataOperations.GetAddress(customerAddress));
+                Customer customer = new Customer();
+                customer.CustomerName = custNameField.Text;
+                customer.AddressID = addressId;
+                DataOperations.AddCustomer(customer);
+
+                DataOperations.LogActivity(User.Username, "Added customer " + customer.CustomerName);
+
+
+                LoadCustomers();
+            }
+
         }
+
 
         private void custEditButton_Click(object sender, EventArgs e)
         {
-            //Find or add country
-            string countryName = custCountryField.Text.ToString();
-            Country country = new Country();
-            country.CountryName = countryName;
-            int countryId = int.Parse(DataOperations.GetCountry(countryName));
-            if (countryId == 0)
-            {
-                DataOperations.AddCountry(country);
+            // Validate that required fields have content
 
+            ToolTip toolTip = new ToolTip();
+
+            if (string.IsNullOrWhiteSpace(custNameField.Text))
+            {
+                toolTip.Show("Customer Name is required", custNameField);
+                return;
             }
 
-            //Find or add city
-            string cityName = custCityField.Text.ToString();
-            City city = new City();
-            countryId = int.Parse(DataOperations.GetCountry(countryName));
-            city.CityName = cityName;
-            city.CountryID = countryId;
-            int cityId = int.Parse(DataOperations.GetCity(cityName));
-            if (cityId == 0)
+            if (string.IsNullOrWhiteSpace(custAddressField.Text))
             {
-                DataOperations.AddCity(city);
+                toolTip.Show("Address is required", custAddressField);
+                return;
             }
 
-            //Find or add address
-            Address address = new Address();
-            cityId = int.Parse(DataOperations.GetCity(cityName));
-            string customerAddress = custAddressField.Text.ToString();
-            address.Address1 = custAddressField.Text;
-            address.Address2 = custAddressFieldTwo.Text;
-            address.PostalCode = custZipField.Text;
-            address.Phone = custPhoneField.Text;
-            address.CityID = cityId;
-            int addressId = int.Parse(DataOperations.GetAddress(customerAddress));
-            if (addressId == 0)
+            if (string.IsNullOrWhiteSpace(custCityField.Text))
             {
-                DataOperations.AddAddress(address);
+                toolTip.Show("City is required", custCityField);
+                return;
             }
 
+            if (string.IsNullOrWhiteSpace(custCountryField.Text))
+            {
+                toolTip.Show("Country is required", custCountryField);
+                return;
+            }
 
-            //Edit the customer
-            var customerId = custDataGrid.CurrentRow.Cells[0].Value;
-            addressId = int.Parse(DataOperations.GetAddress(customerAddress));
-            Customer customer = new Customer();
-            customer.CustomerID = int.Parse((string)customerId);
-            customer.CustomerName = custNameField.Text;
-            customer.AddressID = addressId;
-            DataOperations.EditCustomer(customer);
+            else
+            {
+                //Find or add country
+                string countryName = custCountryField.Text.ToString();
+                Country country = new Country();
+                country.CountryName = countryName;
+                int countryId = int.Parse(DataOperations.GetCountry(countryName));
+                if (countryId == 0)
+                {
+                    DataOperations.AddCountry(country);
 
-            DataOperations.LogActivity(User.Username, "Edited customer " + customer.CustomerName);
+                }
+
+                //Find or add city
+                string cityName = custCityField.Text.ToString();
+                City city = new City();
+                countryId = int.Parse(DataOperations.GetCountry(countryName));
+                city.CityName = cityName;
+                city.CountryID = countryId;
+                int cityId = int.Parse(DataOperations.GetCity(cityName));
+                if (cityId == 0)
+                {
+                    DataOperations.AddCity(city);
+                }
+
+                //Find or add address
+                Address address = new Address();
+                cityId = int.Parse(DataOperations.GetCity(cityName));
+                string customerAddress = custAddressField.Text.ToString();
+                address.Address1 = custAddressField.Text;
+                address.Address2 = custAddressFieldTwo.Text;
+                address.PostalCode = custZipField.Text;
+                address.Phone = custPhoneField.Text;
+                address.CityID = cityId;
+                int addressId = int.Parse(DataOperations.GetAddress(customerAddress));
+                if (addressId == 0)
+                {
+                    DataOperations.AddAddress(address);
+                }
 
 
-            LoadCustomers();
+                //Edit the customer
+                var customerId = custDataGrid.CurrentRow.Cells[0].Value;
+                addressId = int.Parse(DataOperations.GetAddress(customerAddress));
+                Customer customer = new Customer();
+                customer.CustomerID = int.Parse((string)customerId);
+                customer.CustomerName = custNameField.Text;
+                customer.AddressID = addressId;
+                DataOperations.EditCustomer(customer);
+
+                DataOperations.LogActivity(User.Username, "Edited customer " + customer.CustomerName);
+
+
+                LoadCustomers();
+
+
+
+            }
 
         }
 
         private void custDeleteButton_Click(object sender, EventArgs e)
         {
-            int customerID = int.Parse(custDataGrid.CurrentRow.Cells[0].Value.ToString());
+            var confirm = MessageBox.Show("Are you sure to delete this item?",
+                         "Confirm Delete!",
+                         MessageBoxButtons.YesNo);
+            if (confirm == DialogResult.Yes)
+            {
+                int customerID = int.Parse(custDataGrid.CurrentRow.Cells[0].Value.ToString());
 
-            DataOperations.DeleteCustomer(customerID);
-            DataOperations.LogActivity(User.Username, "Deleted customer with ID " + customerID);
+                DataOperations.DeleteCustomer(customerID);
+                DataOperations.LogActivity(User.Username, "Deleted customer with ID " + customerID);
+
+            }
 
             LoadCustomers();
         }

@@ -20,22 +20,25 @@ namespace AndrewHowardSchedulerApp
         {
             InitializeComponent();
             LoadAppointments(userID);
+            NotifyAppointments();
         }
 
         public void LoadAppointments(int userID)
         {
             apptDayViewRadio.Checked = true;
+            ToolTip toolTip = new ToolTip();
 
             //Appointment Data Grid
-            var appointmentsTable = DataOperations.GetAppointments(userID);
-            var appointmentsSource = new BindingSource();
-            appointmentsSource.DataSource = appointmentsTable;
             apptDataGrid.RowHeadersVisible = false;
             apptDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             apptDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             apptDataGrid.MultiSelect = false;
             apptDataGrid.RowPrePaint += new DataGridViewRowPrePaintEventHandler(dgv_RowPrePaint);
             apptDataGrid.DataSource = null;
+            apptTitle.Text = "Appointments Today";
+            var appointmentsTable = DataOperations.GetAppointmentsDay(User.UserID);
+            var appointmentsSource = new BindingSource();
+            appointmentsSource.DataSource = appointmentsTable;
             apptDataGrid.DataSource = appointmentsSource;
             apptDataGrid.Columns["ID"].Visible = false;
 
@@ -49,6 +52,16 @@ namespace AndrewHowardSchedulerApp
             apptStartPicker.Value = new DateTime(now.Year, now.Month, now.Day, 8, 0, 0);
             apptEndPicker.Value = new DateTime(now.Year, now.Month, now.Day, 17, 0, 0);
 
+
+        }
+
+        public void NotifyAppointments(){
+
+            if (DataOperations.AppointmentsFifteenMinutes(User.UserID) == true)
+            {
+                MessageBox.Show("Your scheduled appointment is starting soon!", "Appointment in 15 minutes", MessageBoxButtons.OK);
+
+            }
         }
 
         private void dgv_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
@@ -81,68 +94,208 @@ namespace AndrewHowardSchedulerApp
         private void apptMonthViewRadio_CheckedChanged(object sender, EventArgs e)
         {
             apptTitle.Text = "Appointments This Month";
+            var appointmentsTable = DataOperations.GetAppointmentsMonth(User.UserID);
+            var appointmentsSource = new BindingSource();
+            appointmentsSource.DataSource = appointmentsTable;
+            apptDataGrid.DataSource = appointmentsSource;
+            apptDataGrid.Columns["ID"].Visible = false;
+
+
         }
 
         private void apptWeekViewRadio_CheckedChanged(object sender, EventArgs e)
         {
             apptTitle.Text = "Appointments This Week";
+            var appointmentsTable = DataOperations.GetAppointmentsWeek(User.UserID);
+            var appointmentsSource = new BindingSource();
+            appointmentsSource.DataSource = appointmentsTable;
+            apptDataGrid.DataSource = appointmentsSource;
+            apptDataGrid.Columns["ID"].Visible = false;
+
+
         }
 
         private void apptDayViewRadio_CheckedChanged(object sender, EventArgs e)
         {
+            //Displays appointments for the day based on UTC currentdate
             apptTitle.Text = "Appointments Today";
+            var appointmentsTable = DataOperations.GetAppointmentsDay(User.UserID);
+            var appointmentsSource = new BindingSource();
+            appointmentsSource.DataSource = appointmentsTable;
+            apptDataGrid.DataSource = appointmentsSource;
+            apptDataGrid.Columns["ID"].Visible = false;
+
         }
 
         private void apptAddButton_Click(object sender, EventArgs e)
         {
+            //Require important fields 
+            ToolTip toolTip = new ToolTip();
 
-            string customerName = apptCustomerComboBox.Text;
-            int.TryParse(DataOperations.GetCustomer(customerName), out int customerID);
+            if (string.IsNullOrWhiteSpace(apptTitleField.Text))
+            {
+                toolTip.Show("Title is required", apptTitleField);
+                return;
+            }
 
-            Appointment appointment = new Appointment();
+            if (string.IsNullOrWhiteSpace(apptTypeComboBox.Text))
+            {
+                toolTip.Show("Please select a type", apptTypeComboBox);
+                return;
+            }
 
-            appointment.Title = apptTitleField.Text;
-            appointment.CustomerID = customerID;
-            appointment.UserID = User.UserID;
-            appointment.Type = apptTypeComboBox.Text;
-            appointment.Start = apptStartPicker.Value;
-            appointment.End = apptEndPicker.Value;
+            if (string.IsNullOrWhiteSpace(apptCustomerComboBox.Text))
+            {
+                toolTip.Show("Please select a customer", apptCustomerComboBox);
+                return;
+            }
 
-            DataOperations.AddAppointment(appointment);
-            DataOperations.LogActivity(User.Username, "Added an appointment with ID " + appointment.AppointmentID);
-            LoadAppointments(User.UserID);
+            if (apptStartPicker.Value > apptEndPicker.Value)
+            {
+                toolTip.Show("start time must be before end time", apptStartPicker);
+                return;
+
+            }
+
+            else
+            {
+                string customerName = apptCustomerComboBox.Text;
+                int.TryParse(DataOperations.GetCustomer(customerName), out int customerID);
+
+                Appointment appointment = new Appointment();
+
+                appointment.Title = apptTitleField.Text;
+                appointment.CustomerID = customerID;
+                appointment.UserID = User.UserID;
+                appointment.Type = apptTypeComboBox.Text;
+                appointment.Start = apptStartPicker.Value;
+                appointment.End = apptEndPicker.Value;
+
+                DataOperations.AddAppointment(appointment);
+                DataOperations.LogActivity(User.Username, "Added an appointment with ID " + appointment.AppointmentID);
+
+                //see what was checked and reload that data
+                if (apptDayViewRadio.Checked == true){
+                    LoadAppointments(User.UserID);
+                    apptDayViewRadio.Checked = true;
+                }
+                if (apptWeekViewRadio.Checked == true)
+                {
+                    LoadAppointments(User.UserID);
+                    apptWeekViewRadio.Checked = true;
+                }
+                if (apptMonthViewRadio.Checked == true)
+                {
+                    LoadAppointments(User.UserID);
+                    apptMonthViewRadio.Checked = true;
+                }
+
+
+            }
+
         }
 
         private void apptEditButton_Click(object sender, EventArgs e)
         {
-            string customerName = apptCustomerComboBox.Text;
-            int.TryParse(DataOperations.GetCustomer(customerName), out int customerID);
+            //Require important fields 
+            ToolTip toolTip = new ToolTip();
 
-            var selectedAppointmentId = apptDataGrid.CurrentRow.Cells[0].Value;
+            if (string.IsNullOrWhiteSpace(apptTitleField.Text))
+            {
+                toolTip.Show("Title is required", apptTitleField);
+                return;
+            }
 
-            Appointment appointment = new Appointment();
+            if (string.IsNullOrWhiteSpace(apptTypeComboBox.Text))
+            {
+                toolTip.Show("Please select a type", apptTypeComboBox);
+                return;
+            }
 
-            appointment.AppointmentID = int.Parse((string)selectedAppointmentId);
-            appointment.Title = apptTitleField.Text;
-            appointment.CustomerID = customerID;
-            appointment.UserID = User.UserID;
-            appointment.Type = apptTypeComboBox.Text;
-            appointment.Start = apptStartPicker.Value;
-            appointment.End = apptEndPicker.Value;
+            if (string.IsNullOrWhiteSpace(apptCustomerComboBox.Text))
+            {
+                toolTip.Show("Please select a customer", apptCustomerComboBox);
+                return;
+            }
 
-            DataOperations.EditAppointment(appointment);
-            DataOperations.LogActivity(User.Username, "Edited an appointment with ID " + selectedAppointmentId);
+            if (apptStartPicker.Value > apptEndPicker.Value){
+                toolTip.Show("start time must be before end time", apptStartPicker);
+                return;
 
-            LoadAppointments(User.UserID);
+            }
+
+            else
+            {
+                string customerName = apptCustomerComboBox.Text;
+                int.TryParse(DataOperations.GetCustomer(customerName), out int customerID);
+
+                var selectedAppointmentId = apptDataGrid.CurrentRow.Cells[0].Value;
+
+                Appointment appointment = new Appointment();
+
+                appointment.AppointmentID = int.Parse((string)selectedAppointmentId);
+                appointment.Title = apptTitleField.Text;
+                appointment.CustomerID = customerID;
+                appointment.UserID = User.UserID;
+                appointment.Type = apptTypeComboBox.Text;
+                appointment.Start = apptStartPicker.Value;
+                appointment.End = apptEndPicker.Value;
+
+                DataOperations.EditAppointment(appointment);
+                DataOperations.LogActivity(User.Username, "Edited an appointment with ID " + selectedAppointmentId);
+
+
+                //see what was checked and reload that data
+                if (apptDayViewRadio.Checked == true)
+                {
+                    LoadAppointments(User.UserID);
+                    apptDayViewRadio.Checked = true;
+                }
+                if (apptWeekViewRadio.Checked == true)
+                {
+                    LoadAppointments(User.UserID);
+                    apptWeekViewRadio.Checked = true;
+                }
+                if (apptMonthViewRadio.Checked == true)
+                {
+                    LoadAppointments(User.UserID);
+                    apptMonthViewRadio.Checked = true;
+                }
+
+            }
+
         }
 
         private void apptDeleteButton_Click(object sender, EventArgs e)
         {
-            int selectedAppointmentId = int.Parse(apptDataGrid.CurrentRow.Cells[0].Value.ToString());
-            DataOperations.DeleteAppointment(selectedAppointmentId);
-            DataOperations.LogActivity(User.Username, "Deleted an appointment with ID " + selectedAppointmentId);
 
-            LoadAppointments(User.UserID);
+            var confirm = MessageBox.Show("Are you sure to delete this item?",
+                                     "Confirm Delete!",
+                                     MessageBoxButtons.YesNo);
+            if (confirm == DialogResult.Yes)
+            {
+                int selectedAppointmentId = int.Parse(apptDataGrid.CurrentRow.Cells[0].Value.ToString());
+                DataOperations.DeleteAppointment(selectedAppointmentId);
+                DataOperations.LogActivity(User.Username, "Deleted an appointment with ID " + selectedAppointmentId);
+            }
+
+
+            //see what was checked and reload that data
+            if (apptDayViewRadio.Checked == true)
+            {
+                LoadAppointments(User.UserID);
+                apptDayViewRadio.Checked = true;
+            }
+            if (apptWeekViewRadio.Checked == true)
+            {
+                LoadAppointments(User.UserID);
+                apptWeekViewRadio.Checked = true;
+            }
+            if (apptMonthViewRadio.Checked == true)
+            {
+                LoadAppointments(User.UserID);
+                apptMonthViewRadio.Checked = true;
+            }
         }
 
         private void apptDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
