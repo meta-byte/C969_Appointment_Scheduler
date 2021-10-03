@@ -13,10 +13,10 @@ namespace AndrewHowardSchedulerApp.DB
     public static class DataOperations
     {
         //private
-        private const string server = "localhost";
+        private const string server = "127.0.0.1";
         private const string database = "client_schedule";
         private const string username = "sqlUser";
-        private const string password = "passw0rd!";
+        private const string password = "Passw0rd!";
         private const string connectionString = "SERVER=" + server + ";" + "DATABASE=" + database + ";" + "Uid=" + username + ";" + "password =" + password + ";" + "SslMode=None";
         private static MySqlConnection connection = new MySqlConnection(connectionString);
 

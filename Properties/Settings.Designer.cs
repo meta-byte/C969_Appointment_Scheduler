@@ -26,18 +26,7 @@ namespace AndrewHowardSchedulerApp.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=wgudb.ucertify.com;user id=U05zos;database=U05zos;persistsecurityinfo=True" +
-            "")]
-        public string U05zosConnectionString {
-            get {
-                return ((string)(this["U05zosConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("server=localhost;user id=sqlUser;password=passw0rd!;persistsecurityinfo=True;data" +
+        [global::System.Configuration.DefaultSettingValueAttribute("server=127.0.0.1;user id=sqlUser;password=Passw0rd!;persistsecurityinfo=True;data" +
             "base=client_schedule")]
         public string client_scheduleConnectionString {
             get {
