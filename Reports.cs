@@ -59,17 +59,20 @@ namespace AndrewHowardSchedulerApp
             for (int i = 1; i <= 12; i++)
             {
                 List<string> list = DataOperations.GetApptsByMonth(User.UserID, i);
-                report.AppendLine(Environment.NewLine + DateTimeFormatInfo.CurrentInfo.GetMonthName(i));
-                var query = from type in list
-                            group type by type into g
-                            let count = g.Count()
-                            orderby count descending
-                            select new { Value = g.Key, Count = count };
 
-                foreach (var type in query)
+
+                report.AppendLine(Environment.NewLine + DateTimeFormatInfo.CurrentInfo.GetMonthName(i));
+                var results = from type in list
+                              group type by type into g
+                              let count = g.Count()
+                              orderby count descending
+                              select new { Value = g.Key, Count = count };
+
+                foreach (var type in results)
                 {
                     report.AppendLine("     " + type.Value + ": " + type.Count);
                 }
+
             }
 
             rptTextBox.Text = report.ToString();
