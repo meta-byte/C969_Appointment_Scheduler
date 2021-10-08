@@ -234,14 +234,43 @@ namespace AndrewHowardSchedulerApp.DB
 
                 if (reader.HasRows)
                 {
+                    reader.Close();
                     return true;
-                    Console.WriteLine("HERE");
                 }
             }
 
             catch (Exception ex)
             {
                 Console.WriteLine("Error getting fifteen minute appointments: " + ex);
+            }
+
+            Disconnect();
+            return false;
+        }
+
+        public static bool OverlapAppointments(int userID, DateTime start, DateTime end)
+        {
+            string startTime = start.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            string endTime = end.ToUniversalTime().ToString("yy-MM-dd HH:mm:ss");
+            try
+            {
+
+                Connect();
+                var selectAppointment = "select appointment.appointmentId, appointment.title, customer.customerName, appointment.type, appointment.start, appointment.end from appointment join customer on appointment.customerId = customer.customerId where start <= '" + endTime + "' AND end >= '" + startTime + "' and userId = '" + userID + "' ;";
+                MySqlCommand command = new MySqlCommand(selectAppointment, connection);
+                Console.WriteLine(command.CommandText);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Close();
+                    return true;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error checking overlapping appointments: " + ex);
             }
 
             Disconnect();
@@ -827,8 +856,8 @@ namespace AndrewHowardSchedulerApp.DB
                     appointments.Add(new Appointment()
                     {
                         Title = reader["title"].ToString(),
-                        Start = (DateTime)reader["start"],
-                        End = (DateTime)reader["end"]
+                        Start = Convert.ToDateTime(reader["start"]).ToLocalTime(),
+                        End = Convert.ToDateTime(reader["end"]).ToLocalTime()
                     });
                 }
 

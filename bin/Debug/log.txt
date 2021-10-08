@@ -133,3 +133,33 @@ test : logged in : 9/30/2021 9:15:04 PM
 test : logged in : 9/30/2021 9:16:31 PM
 test : logged in : 9/30/2021 9:16:55 PM
 test : logged in : 10/3/2021 7:41:23 PM
+test : logged in : 10/7/2021 8:30:34 PM
+test : logged in : 10/7/2021 8:34:38 PM
+test : Added an appointment with ID 0 : 10/7/2021 8:34:47 PM
+test : logged in : 10/7/2021 8:49:48 PM
+test : Added an appointment with ID 0 : 10/7/2021 8:49:58 PM
+test : logged in : 10/7/2021 8:50:36 PM
+test : Added an appointment with ID 0 : 10/7/2021 8:50:50 PM
+test : Added an appointment with ID 0 : 10/7/2021 8:50:57 PM
+test : Added an appointment with ID 0 : 10/7/2021 8:51:23 PM
+test : Added an appointment with ID 0 : 10/7/2021 8:51:53 PM
+test : logged in : 10/7/2021 8:52:35 PM
+test : logged in : 10/7/2021 9:20:24 PM
+test : Added an appointment with ID 0 : 10/7/2021 9:20:36 PM
+test : Added an appointment with ID 0 : 10/7/2021 9:20:41 PM
+test : logged in : 10/7/2021 9:29:55 PM
+test : Added an appointment with ID 0 : 10/7/2021 9:30:05 PM
+test : logged in : 10/7/2021 9:33:52 PM
+test : Added an appointment with ID 0 : 10/7/2021 9:34:15 PM
+test : logged in : 10/7/2021 9:38:56 PM
+test : Added an appointment with ID 0 : 10/7/2021 9:39:57 PM
+test : logged in : 10/7/2021 9:41:15 PM
+test : logged in : 10/7/2021 9:43:17 PM
+test : logged in : 10/7/2021 9:44:13 PM
+test : logged in : 10/7/2021 9:45:20 PM
+test : Added an appointment with ID 0 : 10/7/2021 9:45:42 PM
+test : logged in : 10/7/2021 9:50:03 PM
+test : logged in : 10/7/2021 9:55:18 PM
+test : logged in : 10/7/2021 9:57:05 PM
+test : Added an appointment with ID 0 : 10/7/2021 9:57:25 PM
+test : logged in : 10/7/2021 9:59:41 PM

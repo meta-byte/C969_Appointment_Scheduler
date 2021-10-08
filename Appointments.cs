@@ -154,40 +154,64 @@ namespace AndrewHowardSchedulerApp
             {
                 toolTip.Show("start time must be before end time", apptStartPicker);
                 return;
+            }
 
+            if (apptStartPicker.Value.Hour < 8 || apptStartPicker.Value.Hour >= 17)
+            {
+                MessageBox.Show("Please select a start time within business hours of 8:00am and 5:00pm", "Outside of Office Hours", MessageBoxButtons.OK);
+                return;
+            }
+
+            if (apptEndPicker.Value.Hour < 8 || apptEndPicker.Value.Hour > 17)
+            {
+                MessageBox.Show("Please select an end time within business hours of 8:00am and 5:00pm", "Outside of Office Hours", MessageBoxButtons.OK);
+                return;
             }
 
             else
             {
-                string customerName = apptCustomerComboBox.Text;
-                int.TryParse(DataOperations.GetCustomer(customerName), out int customerID);
+                DateTime start = apptStartPicker.Value;
+                DateTime end = apptEndPicker.Value;
 
-                Appointment appointment = new Appointment();
-
-                appointment.Title = apptTitleField.Text;
-                appointment.CustomerID = customerID;
-                appointment.UserID = User.UserID;
-                appointment.Type = apptTypeComboBox.Text;
-                appointment.Start = apptStartPicker.Value;
-                appointment.End = apptEndPicker.Value;
-
-                DataOperations.AddAppointment(appointment);
-                DataOperations.LogActivity(User.Username, "Added an appointment with ID " + appointment.AppointmentID);
-
-                //see what was checked and reload that data
-                if (apptDayViewRadio.Checked == true){
-                    LoadAppointments(User.UserID);
-                    apptDayViewRadio.Checked = true;
-                }
-                if (apptWeekViewRadio.Checked == true)
+                if (DataOperations.OverlapAppointments(User.UserID, start, end))
                 {
-                    LoadAppointments(User.UserID);
-                    apptWeekViewRadio.Checked = true;
+                    MessageBox.Show("This appointment overlaps with another scheduled appointment", "Overlap Detected!", MessageBoxButtons.OK);
+                    return;
                 }
-                if (apptMonthViewRadio.Checked == true)
+
+                else
                 {
-                    LoadAppointments(User.UserID);
-                    apptMonthViewRadio.Checked = true;
+                    string customerName = apptCustomerComboBox.Text;
+                    int.TryParse(DataOperations.GetCustomer(customerName), out int customerID);
+
+                    Appointment appointment = new Appointment();
+
+                    appointment.Title = apptTitleField.Text;
+                    appointment.CustomerID = customerID;
+                    appointment.UserID = User.UserID;
+                    appointment.Type = apptTypeComboBox.Text;
+                    appointment.Start = start;
+                    appointment.End = end;
+
+                    DataOperations.AddAppointment(appointment);
+                    DataOperations.LogActivity(User.Username, "Added an appointment with ID " + appointment.AppointmentID);
+
+                    //see what was checked and reload that data
+                    if (apptDayViewRadio.Checked == true)
+                    {
+                        LoadAppointments(User.UserID);
+                        apptDayViewRadio.Checked = true;
+                    }
+                    if (apptWeekViewRadio.Checked == true)
+                    {
+                        LoadAppointments(User.UserID);
+                        apptWeekViewRadio.Checked = true;
+                    }
+                    if (apptMonthViewRadio.Checked == true)
+                    {
+                        LoadAppointments(User.UserID);
+                        apptMonthViewRadio.Checked = true;
+                    }
                 }
 
 
@@ -218,52 +242,77 @@ namespace AndrewHowardSchedulerApp
                 return;
             }
 
-            if (apptStartPicker.Value > apptEndPicker.Value){
+            if (apptStartPicker.Value > apptEndPicker.Value)
+            {
                 toolTip.Show("start time must be before end time", apptStartPicker);
                 return;
 
             }
 
+            if (apptStartPicker.Value.Hour < 8 || apptStartPicker.Value.Hour >= 17)
+            {
+                MessageBox.Show("Please select a start time within business hours of 8:00am and 5:00pm", "Outside of Office Hours", MessageBoxButtons.OK);
+                return;
+            }
+
+            if (apptEndPicker.Value.Hour < 8 || apptEndPicker.Value.Hour > 17)
+            {
+                MessageBox.Show("Please select an end time within business hours of 8:00am and 5:00pm", "Outside of Office Hours", MessageBoxButtons.OK);
+                return;
+            }
+
             else
             {
-                string customerName = apptCustomerComboBox.Text;
-                int.TryParse(DataOperations.GetCustomer(customerName), out int customerID);
+                DateTime start = apptStartPicker.Value;
+                DateTime end = apptEndPicker.Value;
 
-                var selectedAppointmentId = apptDataGrid.CurrentRow.Cells[0].Value;
-
-                Appointment appointment = new Appointment();
-
-                appointment.AppointmentID = int.Parse((string)selectedAppointmentId);
-                appointment.Title = apptTitleField.Text;
-                appointment.CustomerID = customerID;
-                appointment.UserID = User.UserID;
-                appointment.Type = apptTypeComboBox.Text;
-                appointment.Start = apptStartPicker.Value;
-                appointment.End = apptEndPicker.Value;
-
-                DataOperations.EditAppointment(appointment);
-                DataOperations.LogActivity(User.Username, "Edited an appointment with ID " + selectedAppointmentId);
-
-
-                //see what was checked and reload that data
-                if (apptDayViewRadio.Checked == true)
+                if (DataOperations.OverlapAppointments(User.UserID, start, end))
                 {
-                    LoadAppointments(User.UserID);
-                    apptDayViewRadio.Checked = true;
+                    MessageBox.Show("This appointment overlaps with another scheduled appointment", "Overlap Detected!", MessageBoxButtons.OK);
+                    return;
                 }
-                if (apptWeekViewRadio.Checked == true)
+
+                else
                 {
-                    LoadAppointments(User.UserID);
-                    apptWeekViewRadio.Checked = true;
-                }
-                if (apptMonthViewRadio.Checked == true)
-                {
-                    LoadAppointments(User.UserID);
-                    apptMonthViewRadio.Checked = true;
+                    string customerName = apptCustomerComboBox.Text;
+                    int.TryParse(DataOperations.GetCustomer(customerName), out int customerID);
+
+                    var selectedAppointmentId = apptDataGrid.CurrentRow.Cells[0].Value;
+
+                    Appointment appointment = new Appointment();
+
+                    appointment.AppointmentID = int.Parse((string)selectedAppointmentId);
+                    appointment.Title = apptTitleField.Text;
+                    appointment.CustomerID = customerID;
+                    appointment.UserID = User.UserID;
+                    appointment.Type = apptTypeComboBox.Text;
+                    appointment.Start = apptStartPicker.Value;
+                    appointment.End = apptEndPicker.Value;
+
+                    DataOperations.EditAppointment(appointment);
+                    DataOperations.LogActivity(User.Username, "Edited an appointment with ID " + selectedAppointmentId);
+
+
+                    //see what was checked and reload that data
+                    if (apptDayViewRadio.Checked == true)
+                    {
+                        LoadAppointments(User.UserID);
+                        apptDayViewRadio.Checked = true;
+                    }
+                    if (apptWeekViewRadio.Checked == true)
+                    {
+                        LoadAppointments(User.UserID);
+                        apptWeekViewRadio.Checked = true;
+                    }
+                    if (apptMonthViewRadio.Checked == true)
+                    {
+                        LoadAppointments(User.UserID);
+                        apptMonthViewRadio.Checked = true;
+                    }
+
                 }
 
             }
-
         }
 
         private void apptDeleteButton_Click(object sender, EventArgs e)
