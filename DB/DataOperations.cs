@@ -819,14 +819,15 @@ namespace AndrewHowardSchedulerApp.DB
             {
                 Connect();
 
-                var selectApptTypes = "select type from appointment where userId = '" + userId + "' and month(start) = '" + month + "';";
+                var selectApptTypes = "select type, count(type) from appointment where userId = '" + userId + "' and month(start) = '" + month + "';";
                 MySqlCommand command = new MySqlCommand(selectApptTypes, connection);
                 MySqlDataReader reader = command.ExecuteReader();
 
 
                 while (reader.Read())
                 {
-                    apptTypesList.Add(reader["type"].ToString());
+                    string typeCount = reader["type"].ToString() + ":" + reader["count(type)"].ToString();
+                    apptTypesList.Add(typeCount);
                 }
 
             }

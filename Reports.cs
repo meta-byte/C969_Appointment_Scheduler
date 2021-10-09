@@ -58,19 +58,12 @@ namespace AndrewHowardSchedulerApp
             var report = new StringBuilder();
             for (int i = 1; i <= 12; i++)
             {
-                List<string> list = DataOperations.GetApptsByMonth(User.UserID, i);
-
-
+                List<string> typeList = DataOperations.GetApptsByMonth(User.UserID, i);
                 report.AppendLine(Environment.NewLine + DateTimeFormatInfo.CurrentInfo.GetMonthName(i));
-                var results = from type in list
-                              group type by type into g
-                              let count = g.Count()
-                              orderby count descending
-                              select new { Value = g.Key, Count = count };
 
-                foreach (var type in results)
+                foreach (var type in typeList)
                 {
-                    report.AppendLine("     " + type.Value + ": " + type.Count);
+                    report.AppendLine(type + Environment.NewLine);
                 }
 
             }

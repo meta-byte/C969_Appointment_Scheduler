@@ -163,3 +163,14 @@ test : logged in : 10/7/2021 9:55:18 PM
 test : logged in : 10/7/2021 9:57:05 PM
 test : Added an appointment with ID 0 : 10/7/2021 9:57:25 PM
 test : logged in : 10/7/2021 9:59:41 PM
+test : logged in : 10/9/2021 4:20:52 PM
+test : logged in : 10/9/2021 4:21:47 PM
+test : logged in : 10/9/2021 4:30:02 PM
+test : logged in : 10/9/2021 4:32:21 PM
+test : logged in : 10/9/2021 4:35:38 PM
+test : logged in : 10/9/2021 5:31:13 PM
+test : logged in : 10/9/2021 5:33:27 PM
+test : logged in : 10/9/2021 5:45:40 PM
+test : Added an appointment with ID 0 : 10/9/2021 5:45:51 PM
+test : logged in : 10/9/2021 5:52:58 PM
+test : Edited an appointment with ID 48 : 10/9/2021 5:53:30 PM

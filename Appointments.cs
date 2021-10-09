@@ -16,6 +16,10 @@ namespace AndrewHowardSchedulerApp
     public partial class Appointments : Form
     {
 
+        public delegate string Added(string title, DateTime start, DateTime end);
+        public delegate string Edited(int id, string title, DateTime start, DateTime end);
+
+
         public Appointments(int userID)
         {
             InitializeComponent();
@@ -196,6 +200,11 @@ namespace AndrewHowardSchedulerApp
                     DataOperations.AddAppointment(appointment);
                     DataOperations.LogActivity(User.Username, "Added an appointment with ID " + appointment.AppointmentID);
 
+                    //Lambda for confirming that an appointment has been successfully created.
+                    Added obj = (title, startTime, endTime) => { return title + " has been scheduled! " + Environment.NewLine + "It will begin at " + startTime + Environment.NewLine + "It will end on: " + endTime; };
+                    string addedSuccess = obj.Invoke(appointment.Title, appointment.Start, appointment.End);
+                    MessageBox.Show(addedSuccess);
+
                     //see what was checked and reload that data
                     if (apptDayViewRadio.Checked == true)
                     {
@@ -291,7 +300,11 @@ namespace AndrewHowardSchedulerApp
 
                     DataOperations.EditAppointment(appointment);
                     DataOperations.LogActivity(User.Username, "Edited an appointment with ID " + selectedAppointmentId);
-
+                    
+                    //Lambda for confirming that an appointment has been edited.
+                    Edited obj = (id, title, startTime, endTime) => { return "appointment with ID: " + id + " has been edited!" + Environment.NewLine + "The title is now " + title + Environment.NewLine + "It will begin at " + startTime + Environment.NewLine + "It will end on: " + endTime; };
+                    string editedSuccess = obj.Invoke(appointment.AppointmentID, appointment.Title, appointment.Start, appointment.End);
+                    MessageBox.Show(editedSuccess);
 
                     //see what was checked and reload that data
                     if (apptDayViewRadio.Checked == true)

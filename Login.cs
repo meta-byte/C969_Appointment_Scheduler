@@ -19,6 +19,9 @@ namespace AndrewHowardSchedulerApp
 
         string loginErrorMessage;
         string loginErrorTitle;
+        string welcomeMessage;
+        string welcomeTitle;
+        public delegate string Welcome(string name);
 
         public login()
         {
@@ -51,6 +54,9 @@ namespace AndrewHowardSchedulerApp
             loginButton.Text = "Login";
             loginErrorMessage = "Invalid Username or Password";
             loginErrorTitle = "Login Error";
+            welcomeMessage = " Welcome ";
+            welcomeTitle = "Login success!";
+
         }
 
         private void japaneseLogin()
@@ -63,6 +69,8 @@ namespace AndrewHowardSchedulerApp
             loginButton.Text = "ログインする";
             loginErrorMessage = "無効なユーザー名またはパスワード";
             loginErrorTitle = "ログインエラー";
+            welcomeMessage = "いらっしゃいませ! ";
+            welcomeTitle = "ログイン成功！";
         }
 
         private void loginButton_Click(object sender, EventArgs e)
@@ -75,6 +83,10 @@ namespace AndrewHowardSchedulerApp
 
             if (currentUser != 0)
             {
+                //A small lambda for a welcome message that works in Japanese and English.
+                Welcome obj = (currentUsername) => { return welcomeMessage + currentUsername ; };
+                string Welcome = obj.Invoke(User.Username);
+                MessageBox.Show(Welcome, welcomeTitle, MessageBoxButtons.OK);
 
                 this.Hide();
                 Appointments Appointments = new Appointments(currentUser);
